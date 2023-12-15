@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.tabpat.dao.UserDao">
+    <select id="getUserByName" resultType="com.example.tabpat.domain.UserDo">
+        SELECT *
+        FROM users
+        WHERE username = #{username};
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.UserDo" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users(user_id,
+                          username,
+                          password,
+                          qq,
+                          we_chat,
+                          email,
+                          name,
+                          create_time,
+                          update_time,
+                          birth_day,
+                          phone)
+        VALUES (#{userId},
+                #{username},
+                #{password},
+                #{qq},
+                #{weChat},
+                #{email},
+                #{name},
+                #{createTime},
+                #{updateTime},
+                #{birthDay},
+                #{phone})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.tabpat.domain.UserDo">
+        UPDATE users
+        <set>
+            password = #{et.password},
+            qq = #{et.qq},
+            we_chat = #{et.weChat},
+            email = #{et.email},
+            name = #{et.name},
+            update_time = #{et.updateTime},
+            birth_day = #{et.birthDay},
+            phone = #{et.phone}
+        </set>
+        WHERE username = #{et.username}
+    </update>
+</mapper>
