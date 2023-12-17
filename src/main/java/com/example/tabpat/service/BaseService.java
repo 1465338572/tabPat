@@ -1,8 +1,6 @@
 package com.example.tabpat.service;
 
-import com.example.tabpat.dao.RoleDao;
-import com.example.tabpat.dao.UserDao;
-import com.example.tabpat.dao.UserRoleDao;
+import com.example.tabpat.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +14,10 @@ public class BaseService {
     protected RoleDao roleDao;
     protected UserDao userDao;
     protected UserRoleDao userRoleDao;
+
+    protected UserThreadDao userThreadDao;
+
+    protected ApiKeyDao apiKeyDao;
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -31,6 +33,12 @@ public class BaseService {
     public void setUserRoleDao(UserRoleDao userRoleDao) {
         this.userRoleDao = userRoleDao;
     }
+
+    @Autowired
+    public void setUserThreadlDao(UserThreadDao userThreadDao) { this.userThreadDao = userThreadDao; }
+
+    @Autowired
+    public void setApiKeyDao(ApiKeyDao apiKeyDao){ this.apiKeyDao = apiKeyDao; }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";

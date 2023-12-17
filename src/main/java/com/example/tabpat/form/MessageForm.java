@@ -8,10 +8,9 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class LoginForm implements Serializable {
+public class MessageForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    private String username;
-    private String password;
+    private String role;
+    private String message;
 }

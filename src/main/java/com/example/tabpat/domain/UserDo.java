@@ -4,9 +4,15 @@ import lombok.Data;
 import lombok.ToString;
 import org.apache.ibatis.annotations.Lang;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @ToString
-public class UserDo {
+public class UserDo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String userId; // 用户id
     private String username;
     private String password;

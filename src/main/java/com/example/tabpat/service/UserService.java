@@ -1,29 +1,41 @@
 package com.example.tabpat.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.tabpat.check.UserCheck;
+import com.example.tabpat.dao.ApiKeyDao;
+import com.example.tabpat.domain.ApiKeyDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.domain.UserRoleDo;
+import com.example.tabpat.domain.UserThreadDo;
 import com.example.tabpat.form.UserForm;
 import com.example.tabpat.util.BeanCopierUtil;
+import com.example.tabpat.util.ClientUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
 import com.example.tabpat.util.Utils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+
 @Service
 public class UserService extends BaseService {
     private UserCheck userCheck;
 
+    private ClientUtil clientUtil;
+
     @Autowired
     public void setUserCheck(UserCheck userCheck) {
         this.userCheck = userCheck;
+    }
+    @Autowired
+    public void setClientUtil(ClientUtil clientUtil){
+        this.clientUtil = clientUtil;
     }
 
     @Transactional
@@ -37,6 +49,8 @@ public class UserService extends BaseService {
             UserRoleDo userRoleDo = buildUserRoleSave(userDo);
             userDao.insert(userDo);
             userRoleDao.insert(userRoleDo);
+            UserThreadDo userThreadDo = getThread(userForm);
+            userThreadDao.insert(userThreadDo);
             return Result.create(200, "用户创建成功");
         } catch (Exception e) {
             throw new ServiceException(e);
@@ -76,6 +90,39 @@ public class UserService extends BaseService {
             userDo.setBirthDay(Utils.createTimestamp(userForm.getBirthDay()));
             userDo.setPhone(userForm.getPhone());
             return userDo;
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private UserThreadDo getThread(UserForm userForm) throws ServiceException {
+        try {
+
+            UserDo userDo = userDao.getUserByName(userForm.getUsername());
+            UserThreadDo userThreadDo = new UserThreadDo();
+            userThreadDo.setUserId(userDo.getUserId());
+            userThreadDo.setRole(userDo.getName());
+
+            JSONObject data = new JSONObject();
+            JSONObject roleMessage = new JSONObject();
+            roleMessage.put("role", "user");
+            roleMessage.put("content", "");
+
+            JSONArray arrayMessage = new JSONArray();
+            arrayMessage.add(roleMessage);
+            data.put("messages", arrayMessage);
+
+            String response = clientUtil.doPost("https://api.openai.com/v1/threads",data);
+
+            if (response != null) {
+                // 处理响应
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(response);
+                String thread = rootNode.path("id").asText();
+                userThreadDo.setThread(thread);
+            }
+
+            return userThreadDo;
         } catch (Exception e) {
             throw new ServiceException(e);
         }

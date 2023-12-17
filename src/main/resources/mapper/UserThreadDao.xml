@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.UserThreadDao">
+
+    <select id="getThreadByUserId" resultType="com.example.tabpat.domain.UserThreadDo">
+        SELECT *
+        FROM user_url
+        WHERE user_id = #{userId};
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.UserThreadDo" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO user_url(user_id,
+                             thread,
+                             role)
+        VALUES (#{userId},
+                #{thread},
+                #{role})
+    </insert>
+</mapper>

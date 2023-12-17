@@ -1,4 +1,4 @@
-package com.example.tabpat.form;
+package com.example.tabpat.domain;
 
 import lombok.Data;
 import lombok.ToString;
@@ -8,10 +8,12 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class LoginForm implements Serializable {
+public class ApiKeyDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String username;
-    private String password;
+    private String id;
+
+    private String apiKey;
+
 }
