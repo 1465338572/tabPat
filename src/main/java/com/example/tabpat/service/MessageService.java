@@ -18,8 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class MessageService extends BaseService {
-    String apiKey = "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";
-
     private ClientUtil clientUtil;
 
     @Autowired
@@ -30,29 +28,6 @@ public class MessageService extends BaseService {
     @Transactional
     public Result getMessage(String message) throws ServiceException {
         try {
-//            HttpClient client = HttpClient.newHttpClient();
-//            JSONObject data = new JSONObject();
-//            JSONObject roleMessage = new JSONObject();
-//            roleMessage.put("role", "user");
-//            roleMessage.put("content", "老婆！！！");
-//
-//            JSONArray arrayMessage = new JSONArray();
-//            arrayMessage.add(roleMessage);
-//            data.put("model", "gpt-4");
-//            data.put("messages", arrayMessage);
-//            data.put("temperature", 0.7);
-//
-//            HttpRequest request = HttpRequest.newBuilder()
-//                    .uri(URI.create("https://api.openai.com/v1/chat/completions"))
-//                    .header("Content-Type", "application/json")
-//                    .header("Authorization", "Bearer " + apiKey)
-//                    .POST(HttpRequest.BodyPublishers.ofString(data.toString()))
-//                    .build();
-//            Void response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-//                    .thenApply(HttpResponse::body)
-//                    .thenAccept(System.out::println)
-//                    .join();
-//            System.out.println(response);
 
             String username = getCurrentUsername();
 
@@ -66,7 +41,7 @@ public class MessageService extends BaseService {
             if (runResponse != null) {
 
                 String status = null;
-                String step = null;
+//                String step = null;
 
                 // 处理响应
                 ObjectMapper mapper = new ObjectMapper();
