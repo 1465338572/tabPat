@@ -50,7 +50,7 @@ mybatis-plus:
 ### jwt
 jwt:
   ###过期时间 单位s
-  time: 1800
+  time: 2592000
   ###安全密钥
   secret: "7b718b39880f3e47f291509bdca6447a2691aa7fab6bc664e28c7e8588e795d6094a1e95ecbf0b728bd062dcc5bc5d2321a784b12acac17f479df62723550bf8"
   ###token前缀

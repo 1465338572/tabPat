@@ -30,36 +30,37 @@ public class UserController {
      */
     @PostMapping(value = "/public/login")
     @ResponseBody
-    public Result login(@RequestBody LoginForm loginForm) {
+    public Result login(@RequestBody LoginForm loginForm, HttpServletResponse response) {
 
         try {
             Map map = loginService.login(loginForm);
             return Result.create(HttpStatusCode.OK, "登录成功", map);
-        } catch (UsernameNotFoundException e) {
-            return Result.create(HttpStatusCode.LOGINERROR, e.getMessage());
         } catch (RuntimeException re) {
-            return Result.create(HttpStatusCode.LOGINERROR, re.getMessage());
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            return Result.create(HttpStatusCode.SERVICEERROR, re.getMessage());
         }
     }
 
     @PostMapping(value = "/public/addUser")
     @ResponseBody
-    public Result save(@RequestBody UserForm userForm) {
+    public Result save(@RequestBody UserForm userForm,HttpServletResponse response) {
 
         try {
             return userService.save(userForm);
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            return Result.create(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
     }
 
     @PutMapping(value = "/secure/updateUser")
     @ResponseBody
-    public Result update(@RequestBody UserForm userForm) {
+    public Result update(@RequestBody UserForm userForm,HttpServletResponse response) {
         try {
             return userService.update(userForm);
         } catch (ServiceException e) {
-            throw new RuntimeException(e);
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            return Result.create(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
     }
 }

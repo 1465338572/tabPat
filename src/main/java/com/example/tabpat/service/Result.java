@@ -5,8 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * &#064;Description:  返回结果实体类
- * &#064;Author:  Mt.Xu
+ * 返回结果实体类
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
