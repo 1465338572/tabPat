@@ -1,46 +1,55 @@
 package com.example.tabpat.service;
 
 import com.example.tabpat.domain.AppDo;
+import com.example.tabpat.dto.AppDto;
 import com.google.protobuf.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class AppService extends BaseService{
     @Transactional
     public Result list() throws ServiceException {
         try{
-            List<AppDo> list  = appDao.selectList(null);
-            Map<Long, AppDo> appDoMap = new HashMap<>();
-
-            for (AppDo appDo : list) {
-                appDoMap.put(appDo.getId(), appDo);
-            }
-
-            for (AppDo appDo : list) {
-                if (appDo.getPid() != 0) {
-                    AppDo parent = appDoMap.get(appDo.getPid());
-                    if (parent != null) {
-                        parent.addChild(appDo);
-                    }
-                }
-            }
-
-            List<AppDo> topLevelApps = new ArrayList<>();
-            for (AppDo appDo : list) {
-                if (appDo.getPid() == 0) {
-                    topLevelApps.add(appDo);
-                }
-            }
-
-            return Result.create(200,"路由查询成功",topLevelApps);
+            List<AppDo> appDoList  = appDao.selectList(null);
+            List<AppDto> appDtoList = getAppDto(appDoList);
+            return Result.create(200,"路由查询成功",appDtoList);
         }catch (Exception e){
             throw new ServiceException(e);
         }
+    }
+
+    private List<AppDto> getAppDto(List<AppDo> appDos){
+        List<AppDto> appDtos = new ArrayList<>();
+        Map<Long, AppDto> appDtoMap = new HashMap<>();
+        for (AppDo appDo : appDos){
+            AppDto appDto = new AppDto();
+            appDto.setId(appDo.getId());
+            appDto.setName(appDo.getName());
+            String[] typeArray = appDo.getType().split(",");
+            List<String> typeList = new ArrayList<>(Arrays.asList(typeArray));
+            appDto.setType(typeList);
+            appDto.setCode(appDo.getCode());
+            appDto.setIcon(appDo.getIcon());
+            appDto.setPid(appDo.getPid());
+            appDto.setPath(appDo.getPath());
+            appDtos.add(appDto);
+
+            appDtoMap.put(appDo.getId(),appDto);
+        }
+
+        for (AppDto appDto : appDtos){
+            if (appDto.getPid() != null && appDto.getPid() != 0){
+                AppDto parent = appDtoMap.get(appDto.getPid());
+                if (parent != null){
+                    parent.addChild(appDto);
+                }
+            }
+        }
+
+        return appDtos.stream().filter(appDto -> appDto.getPid() == null || appDto.getPid() == 0).collect(Collectors.toList());
     }
 }
