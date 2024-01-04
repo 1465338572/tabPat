@@ -75,9 +75,9 @@ public class MessageService extends BaseService {
 
                 JsonNode jsonMessage = mapper.readTree(response);
 
-                return Result.create(200, "消息回复成功", jsonMessage);
+                return Result.success(200, "消息回复成功", jsonMessage);
             } else {
-                return Result.create(500, "消息回复失败");
+                return Result.failure(500, "消息回复失败");
             }
         } catch (Exception e) {
             throw new ServiceException(e);

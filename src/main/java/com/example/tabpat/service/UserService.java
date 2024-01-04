@@ -8,7 +8,9 @@ import com.example.tabpat.domain.ApiKeyDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.domain.UserRoleDo;
 import com.example.tabpat.domain.UserThreadDo;
+import com.example.tabpat.dto.UserDto;
 import com.example.tabpat.form.UserForm;
+import com.example.tabpat.query.UserQuery;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.ClientUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
@@ -39,6 +41,21 @@ public class UserService extends BaseService {
     }
 
     @Transactional
+    public Result getUser(UserQuery userQuery) throws ServiceException {
+        try {
+            Result result = userCheck.checkUsername(userQuery);
+            if (result.getCode() != 200) {
+                return result;
+            }
+            UserDo userDo = userDao.getUserByName(userQuery.getUsername());
+            UserDto userDto = buildUserGet(userDo);
+            return Result.success(200, "用户创建成功",userDto);
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Transactional
     public Result save(UserForm userForm) throws ServiceException {
         try {
             Result result = userCheck.checkSave(userForm);
@@ -51,7 +68,7 @@ public class UserService extends BaseService {
             userRoleDao.insert(userRoleDo);
             UserThreadDo userThreadDo = getThread(userForm);
             userThreadDao.insert(userThreadDo);
-            return Result.create(200, "用户创建成功");
+            return Result.success(200, "用户创建成功");
         } catch (Exception e) {
             throw new ServiceException(e);
         }
@@ -66,10 +83,14 @@ public class UserService extends BaseService {
             }
             UserDo userDo = buildUserUpdate(userForm);
             userDao.updateById(userDo);
-            return Result.create(200, "用户更新成功");
+            return Result.success(200, "用户更新成功");
         } catch (Exception e) {
             throw new ServiceException(e);
         }
+    }
+
+    private UserDto buildUserGet(UserDo userDo){
+        return BeanCopierUtil.create(userDo, UserDto.class);
     }
 
     private UserDo buildUserSave(UserForm userForm) throws ServiceException {
@@ -81,14 +102,27 @@ public class UserService extends BaseService {
             userDo.setUsername(userForm.getUsername());
             String password = encoder.encode(userForm.getPassword());
             userDo.setPassword(password);
-            userDo.setQq(userForm.getQq());
-            userDo.setWeChat(userForm.getWeChat());
-            userDo.setEmail(userForm.getEmail());
+            if (StringUtils.hasLength(userForm.getQq())){
+                userDo.setQq(userForm.getQq());
+            }
+            if (StringUtils.hasLength(userForm.getWeChat())) {
+                userDo.setWeChat(userForm.getWeChat());
+            }
+            if (StringUtils.hasLength(userForm.getEmail())) {
+                userDo.setEmail(userForm.getEmail());
+            }
             userDo.setName(userForm.getName());
             userDo.setCreateTime(System.currentTimeMillis());
             userDo.setUpdateTime(System.currentTimeMillis());
-            userDo.setBirthDay(Utils.createTimestamp(userForm.getBirthDay()));
-            userDo.setPhone(userForm.getPhone());
+            if (StringUtils.hasLength(userForm.getBirthDay())) {
+                userDo.setBirthDay(Utils.createTimestamp(userForm.getBirthDay()));
+            }
+            if (StringUtils.hasLength(userForm.getPhone())) {
+                userDo.setPhone(userForm.getPhone());
+            }
+            if (StringUtils.hasLength(userForm.getPhoto())) {
+                userDo.setPhoto(userForm.getPhoto());
+            }
             return userDo;
         } catch (Exception e) {
             throw new ServiceException(e);
@@ -156,6 +190,9 @@ public class UserService extends BaseService {
             }
             if (StringUtils.hasText(userForm.getPhone())) {
                 userDo.setPhone(userForm.getPhone());
+            }
+            if (StringUtils.hasLength(userForm.getPhoto())) {
+                userDo.setPhoto(userForm.getPhoto());
             }
             return userDo;
         } catch (Exception e) {

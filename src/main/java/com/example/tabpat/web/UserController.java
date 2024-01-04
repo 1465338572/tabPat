@@ -4,6 +4,7 @@ import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.form.LoginForm;
 import com.example.tabpat.form.UserForm;
+import com.example.tabpat.query.UserQuery;
 import com.example.tabpat.service.LoginService;
 import com.example.tabpat.service.Result;
 import com.example.tabpat.service.UserService;
@@ -34,33 +35,62 @@ public class UserController {
 
         try {
             Map map = loginService.login(loginForm);
-            return Result.create(HttpStatusCode.OK, "登录成功", map);
+            return Result.success(HttpStatusCode.OK, "登录成功", map);
         } catch (RuntimeException re) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.create(HttpStatusCode.SERVICEERROR, re.getMessage());
+            return Result.failure(HttpStatusCode.SERVICEERROR, re.getMessage());
         }
+    }
+
+    @PostMapping(value = "/public/getUser")
+    @ResponseBody
+    public Result getUser(@RequestBody UserQuery userQuery,HttpServletResponse response) {
+        Result result;
+        try {
+            result =userService.getUser(userQuery);
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
     }
 
     @PostMapping(value = "/public/addUser")
     @ResponseBody
     public Result save(@RequestBody UserForm userForm,HttpServletResponse response) {
-
+        Result result;
         try {
-            return userService.save(userForm);
+            result =userService.save(userForm);
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.create(HttpStatusCode.SERVICEERROR, e.getMessage());
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
+        return result;
     }
 
     @PutMapping(value = "/secure/updateUser")
     @ResponseBody
     public Result update(@RequestBody UserForm userForm,HttpServletResponse response) {
+        Result result;
         try {
-            return userService.update(userForm);
+            result = userService.update(userForm);
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.create(HttpStatusCode.SERVICEERROR, e.getMessage());
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
+
+        return result;
     }
 }

@@ -20,10 +20,17 @@ public class AppController {
     @GetMapping(value = "/secure/apps")
     @ResponseBody
     public Result appsList(HttpServletResponse response) {
+        Result result;
         try {
-            return appService.list();
+            result = appService.list();
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.create(HttpStatusCode.SERVICEERROR, e.getMessage());        }
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
     }
 }

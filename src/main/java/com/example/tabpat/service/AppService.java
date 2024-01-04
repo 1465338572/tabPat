@@ -16,7 +16,7 @@ public class AppService extends BaseService{
         try{
             List<AppDo> appDoList  = appDao.selectList(null);
             List<AppDto> appDtoList = getAppDto(appDoList);
-            return Result.create(200,"路由查询成功",appDtoList);
+            return Result.success(200,"路由查询成功",appDtoList);
         }catch (Exception e){
             throw new ServiceException(e);
         }

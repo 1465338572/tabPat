@@ -18,7 +18,8 @@
                           create_time,
                           update_time,
                           birth_day,
-                          phone)
+                          phone,
+                          photo)
         VALUES (#{userId},
                 #{username},
                 #{password},
@@ -29,7 +30,8 @@
                 #{createTime},
                 #{updateTime},
                 #{birthDay},
-                #{phone})
+                #{phone},
+                #{photo})
     </insert>
 
     <update id="updateById" parameterType="com.example.tabpat.domain.UserDo">
@@ -42,7 +44,8 @@
             name = #{et.name},
             update_time = #{et.updateTime},
             birth_day = #{et.birthDay},
-            phone = #{et.phone}
+            phone = #{et.phone},
+            photo = #{et.photo}
         </set>
         WHERE username = #{et.username}
     </update>

@@ -33,11 +33,19 @@ public class Result {
         this.data = data;
     }
 
-    public static Result create(Integer code, String message){
+    public static Result success(Integer code, String message){
         return new Result(code,message);
     }
 
-    public static Result create(Integer code, String message, Object data){
+    public static Result success(Integer code, String message, Object data){
+        return new Result(code,message,data);
+    }
+
+    public static Result failure(Integer code, String message){
+        return new Result(code,message);
+    }
+
+    public static Result failure(Integer code, String message, Object data){
         return new Result(code,message,data);
     }
 }
