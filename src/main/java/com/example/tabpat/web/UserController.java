@@ -93,4 +93,22 @@ public class UserController {
 
         return result;
     }
+
+    @PutMapping(value = "/public/updatePassword")
+    @ResponseBody
+    public Result updatePassword(@RequestBody UserForm userForm,HttpServletResponse response) {
+        Result result;
+        try {
+            result = userService.updatePassword(userForm);
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+
+        return result;
+    }
 }

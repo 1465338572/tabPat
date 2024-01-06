@@ -43,7 +43,7 @@ public class UserService extends BaseService {
     @Transactional
     public Result getUser(UserQuery userQuery) throws ServiceException {
         try {
-            Result result = userCheck.checkUsername(userQuery);
+            Result result = userCheck.checkUsername(userQuery.getUsername());
             if (result.getCode() != 200) {
                 return result;
             }
@@ -91,6 +91,24 @@ public class UserService extends BaseService {
 
     private UserDto buildUserGet(UserDo userDo){
         return BeanCopierUtil.create(userDo, UserDto.class);
+    }
+
+    @Transactional
+    public Result updatePassword(UserForm userForm) throws ServiceException {
+        try {
+            Result result = userCheck.checkUsername(userForm.getUsername());
+            if (result.getCode() != 200) {
+                return result;
+            }
+            UserDo userDo = userDao.getUserByName(userForm.getUsername());
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String password = encoder.encode(userForm.getPassword());
+            userDo.setPassword(password);
+            userDao.updateById(userDo);
+            return Result.success(200, "用户更新成功");
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
     }
 
     private UserDo buildUserSave(UserForm userForm) throws ServiceException {

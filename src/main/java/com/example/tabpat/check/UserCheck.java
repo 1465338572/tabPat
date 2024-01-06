@@ -14,11 +14,11 @@ import static com.example.tabpat.code.HttpStatusCode.SERVICEERROR;
 @Service
 public class UserCheck extends BaseService {
 
-    public Result checkUsername(UserQuery userQuery){
-        if (!StringUtils.hasText(userQuery.getUsername())){
+    public Result checkUsername(String username){
+        if (!StringUtils.hasText(username)){
             return Result.failure(SERVICEERROR, "用户名不能为空");
         }
-        UserDo userDo = userDao.getUserByName(userQuery.getUsername());
+        UserDo userDo = userDao.getUserByName(username);
         if (userDo == null) {
             return Result.failure(SERVICEERROR, "用户名不存在");
         }
