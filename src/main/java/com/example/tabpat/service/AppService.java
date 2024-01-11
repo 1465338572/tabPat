@@ -26,16 +26,7 @@ public class AppService extends BaseService{
         List<AppDto> appDtos = new ArrayList<>();
         Map<Long, AppDto> appDtoMap = new HashMap<>();
         for (AppDo appDo : appDos){
-            AppDto appDto = new AppDto();
-            appDto.setId(appDo.getId());
-            appDto.setName(appDo.getName());
-            String[] typeArray = appDo.getType().split(",");
-            List<String> typeList = new ArrayList<>(Arrays.asList(typeArray));
-            appDto.setType(typeList);
-            appDto.setCode(appDo.getCode());
-            appDto.setIcon(appDo.getIcon());
-            appDto.setPid(appDo.getPid());
-            appDto.setPath(appDo.getPath());
+            AppDto appDto = getAppDto(appDo);
             appDtos.add(appDto);
 
             appDtoMap.put(appDo.getId(),appDto);
@@ -51,5 +42,24 @@ public class AppService extends BaseService{
         }
 
         return appDtos.stream().filter(appDto -> appDto.getPid() == null || appDto.getPid() == 0).collect(Collectors.toList());
+    }
+
+    private static AppDto getAppDto(AppDo appDo) {
+        AppDto appDto = new AppDto();
+        appDto.setId(appDo.getId());
+        appDto.setName(appDo.getName());
+        String[] typeArray = appDo.getType().split(",");
+        List<String> typeList = new ArrayList<>(Arrays.asList(typeArray));
+        appDto.setType(typeList);
+        appDto.setCode(appDo.getCode());
+        appDto.setIcon(appDo.getIcon());
+        appDto.setPid(appDo.getPid());
+        appDto.setPath(appDo.getPath());
+        if (appDo.getPos() != null){
+            String[] posArray = appDo.getPos().split(",");
+            List<String> posList = new ArrayList<>(Arrays.asList(posArray));
+            appDto.setPos(posList);
+        }
+        return appDto;
     }
 }

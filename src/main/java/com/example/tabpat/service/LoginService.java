@@ -82,7 +82,7 @@ public class LoginService extends BaseService implements UserDetailsService {
         Map<String, Object> map = new HashMap<>(3);
 
         map.put("token", jwtConfig.getPrefix() + token);
-        map.put("name", loginForm.getUsername());
+        map.put("username", loginForm.getUsername());
         map.put("roles", roles);
         return map;
     }

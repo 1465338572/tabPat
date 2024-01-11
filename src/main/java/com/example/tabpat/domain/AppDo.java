@@ -21,6 +21,7 @@ public class AppDo implements Serializable {
     private String icon;
     private Long pid;
     private String path;
+    private String pos;
 
     public List<AppDo> children = new ArrayList<>();
 
