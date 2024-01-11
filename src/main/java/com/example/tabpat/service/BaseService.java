@@ -21,6 +21,8 @@ public class BaseService {
 
     protected AppDao appDao;
 
+    protected ArticlesDao articlesDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -44,6 +46,9 @@ public class BaseService {
 
     @Autowired
     public void setAppDao(AppDao appDao){ this.appDao = appDao;}
+
+    @Autowired
+    public void setArticlesDao(ArticlesDao articlesDao){ this.articlesDao = articlesDao; }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.ArticlesDao">
+
+    <select id="selectList" resultType="com.example.tabpat.domain.ArticlesDo">
+        SELECT *
+        FROM articles
+    </select>
+
+    <select id="getArticlesByArticleId" resultType="com.example.tabpat.domain.ArticlesDo">
+        SELECT *
+        FROM articles
+        WHERE article_id = #{articleId}
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.ArticlesDo" useGeneratedKeys="true" keyProperty="articleId">
+        INSERT INTO articles(article_id,
+                             article_title,
+                             article_content,
+                             article_view,
+                             article_date,
+                             article_like_count,
+                             user_id,
+                             article_show)
+        VALUES (#{articleId},
+                #{articleTitle},
+                #{articleContent},
+                #{articleView},
+                #{articleDate},
+                #{articleLikeCount},
+                #{userId},
+                #{articleShow})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.tabpat.domain.ArticlesDo">
+        UPDATE articles
+        <set>
+            articleTitle = #{et.article_title},
+            articleContent = #{et.article_content},
+            articleView = #{et.article_view},
+            articleDate = #{et.article_date},
+            articleLikeCount = #{et.article_like_count},
+            articleShow = #{et.article_show}
+        </set>
+        WHERE articleId = #{et.article_id}
+    </update>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.ArticlesDo">
+        DELETE FROM articles
+        WHERE articleId = #{et.article_id}
+    </delete>
+</mapper>

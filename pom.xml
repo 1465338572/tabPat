@@ -127,7 +127,7 @@
             <artifactId>pagehelper</artifactId>
             <version>5.3.2</version>
         </dependency>
-
+        <!-- json -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -137,6 +137,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
+        </dependency>
+        <!--StringUtils-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>20030203.000550</version>
         </dependency>
     </dependencies>
 
