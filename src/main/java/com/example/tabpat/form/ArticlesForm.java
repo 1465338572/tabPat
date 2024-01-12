@@ -12,6 +12,10 @@ public class ArticlesForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     /**
+     * 博文id
+     */
+    private String articleId;
+    /**
      * 博文标题
      */
     private String articleTitle;

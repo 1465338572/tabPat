@@ -9,11 +9,9 @@ import com.google.protobuf.ServiceException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
-import java.util.Date;
-
-import static com.mysql.cj.protocol.a.MysqlTextValueDecoder.getTime;
 
 @Service
 public class ArticlesService extends BaseService {
@@ -29,7 +27,7 @@ public class ArticlesService extends BaseService {
             FileUtils.mkdir(dirPath);
             ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, dirPath);
             articlesDao.insert(articlesDo);
-            return Result.success(200, "文章发布成功");
+            return Result.success(200, "文章发布成功", articlesDo.getArticleId());
         } catch (Exception e) {
             throw new ServiceException(e);
         }
@@ -60,4 +58,41 @@ public class ArticlesService extends BaseService {
             throw new ServiceException(e);
         }
     }
+
+
+    @Transactional
+    public Result update(ArticlesForm articlesForm) throws ServiceException {
+        try {
+            ArticlesDo articlesDo = buildArticlesUpdate(articlesForm);
+//            articlesDao.updateById(articlesDo);
+            return Result.success(200, "博客已保存", articlesDo.getArticleId());
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private ArticlesDo buildArticlesUpdate(ArticlesForm articlesForm) throws ServiceException {
+        try {
+            ArticlesDo articlesDo = BeanCopierUtil.create(articlesForm, ArticlesDo.class);
+            System.out.println(articlesForm.getArticleId());
+            ArticlesDo articlesDo1 = articlesDao.getArticlesByArticleId(articlesForm.getArticleId());
+            System.out.println(articlesDo1);
+            if (StringUtils.hasLength(articlesForm.getArticleId())) {
+                articlesDo.setArticleId(articlesForm.getArticleId());
+            }
+            if (StringUtils.hasLength(articlesForm.getArticleTitle())) {
+                articlesDo.setArticleTitle(articlesForm.getArticleTitle());
+            }
+            FileUtils.fileDelete(articlesDo1.getArticleContent());
+            FileUtils.fileWrite(articlesDo1.getArticleContent(), articlesForm.getArticleContent());
+            if (articlesForm.getArticleShow() != null) {
+                articlesDo.setArticleShow(articlesForm.getArticleShow());
+            }
+            articlesDo.setArticleDate(System.currentTimeMillis());
+            return articlesDo1;
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }

@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
 public interface ArticlesDao extends BaseMapper<ArticlesDo> {
-    ArticlesDo getArticlesByArticleId(@Param("article_id") String articleId);
+    ArticlesDo getArticlesByArticleId(@Param("articleId") String articleId);
 }

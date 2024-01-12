@@ -7,10 +7,7 @@ import com.example.tabpat.service.Result;
 import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ArticlesController {
@@ -28,6 +25,23 @@ public class ArticlesController {
         Result result;
         try {
             result = articlesService.save(articlesForm);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+    @PutMapping(value = "/secure/updateArticle")
+    @ResponseBody
+    public Result update(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.update(articlesForm);
             if (result.getCode() != 200) {
                 response.setStatus(HttpStatusCode.SERVICEERROR);
                 return result;

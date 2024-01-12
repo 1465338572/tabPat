@@ -12,7 +12,7 @@
     <select id="getArticlesByArticleId" resultType="com.example.tabpat.domain.ArticlesDo">
         SELECT *
         FROM articles
-        WHERE article_id = #{articleId}
+        WHERE article_id = #{ articleId }
     </select>
 
     <insert id="insert" parameterType="com.example.tabpat.domain.ArticlesDo" useGeneratedKeys="true" keyProperty="articleId">
