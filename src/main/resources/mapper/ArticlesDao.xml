@@ -6,7 +6,7 @@
 
     <select id="selectList" resultType="com.example.tabpat.domain.ArticlesDo">
         SELECT *
-        FROM articles
+        FROM articles ${ew.customSqlSegment}
     </select>
 
     <select id="getArticlesByArticleId" resultType="com.example.tabpat.domain.ArticlesDo">
@@ -37,18 +37,31 @@
     <update id="updateById" parameterType="com.example.tabpat.domain.ArticlesDo">
         UPDATE articles
         <set>
-            articleTitle = #{et.article_title},
-            articleContent = #{et.article_content},
-            articleView = #{et.article_view},
-            articleDate = #{et.article_date},
-            articleLikeCount = #{et.article_like_count},
-            articleShow = #{et.article_show}
+            <if test="et.articleTitle!=null">
+                article_title = #{et.articleTitle},
+            </if>
+            <if test="et.articleContent!=null">
+                article_content = #{et.articleContent},
+            </if>
+            <if test="et.articleView!=null">
+                article_view = #{et.articleView},
+            </if>
+            <if test="et.articleDate!=null">
+                article_date = #{et.articleDate},
+            </if>
+            <if test="et.articleLikeCount!=null">
+                article_like_count = #{et.articleLikeCount},
+            </if>
+            <if test="et.articleShow!=null">
+                article_show = #{et.articleShow}
+            </if>
         </set>
-        WHERE articleId = #{et.article_id}
+        WHERE article_id = #{et.articleId}
     </update>
 
     <delete id="deleteById" parameterType="com.example.tabpat.domain.ArticlesDo">
-        DELETE FROM articles
-        WHERE articleId = #{et.article_id}
+        DELETE
+        FROM articles
+        WHERE article_id = #{articleId}
     </delete>
 </mapper>

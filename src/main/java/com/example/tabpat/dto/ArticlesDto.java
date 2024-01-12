@@ -1,15 +1,13 @@
-package com.example.tabpat.form;
+package com.example.tabpat.dto;
 
 import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
-
 @Data
 @ToString
-public class ArticlesForm implements Serializable {
+public class ArticlesDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     /**
@@ -25,10 +23,19 @@ public class ArticlesForm implements Serializable {
      */
     private String articleContent;
     /**
+     * 浏览量
+     */
+    private Integer articleView;
+    /**
+     * 发表时间
+     */
+    private Long articleDate;
+    /**
+     * 点赞数
+     */
+    private Integer articleLikeCount;
+    /**
      * 文章是否展示
      */
     private Boolean articleShow;
-
-    private List<String> articleIds;
-
 }

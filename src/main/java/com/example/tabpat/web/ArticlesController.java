@@ -1,7 +1,9 @@
 package com.example.tabpat.web;
 
+import com.example.tabpat.annotation.UnderlineToCamel;
 import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.ArticlesForm;
+import com.example.tabpat.query.ArticlesQuery;
 import com.example.tabpat.service.ArticlesService;
 import com.example.tabpat.service.Result;
 import com.google.protobuf.ServiceException;
@@ -17,6 +19,23 @@ public class ArticlesController {
     @Autowired
     public void setArticlesService(ArticlesService articlesService) {
         this.articlesService = articlesService;
+    }
+
+    @GetMapping(value = "/secure/listArticle")
+    @ResponseBody
+    public Result list(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.list(articlesQuery);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
     }
 
     @PostMapping(value = "/secure/addArticle")
@@ -49,6 +68,24 @@ public class ArticlesController {
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+    @DeleteMapping(value = "/secure/deleteArticle")
+    @ResponseBody
+    public Result delete(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) throws ServiceException {
+        Result result;
+        try {
+            result = articlesService.delete(articlesForm);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+            throw new ServiceException(e);
         }
         return result;
     }
