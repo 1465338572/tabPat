@@ -64,7 +64,7 @@ public class ArticlesService extends BaseService {
     public Result update(ArticlesForm articlesForm) throws ServiceException {
         try {
             ArticlesDo articlesDo = buildArticlesUpdate(articlesForm);
-//            articlesDao.updateById(articlesDo);
+            articlesDao.updateById(articlesDo);
             return Result.success(200, "博客已保存", articlesDo.getArticleId());
         } catch (Exception e) {
             throw new ServiceException(e);
