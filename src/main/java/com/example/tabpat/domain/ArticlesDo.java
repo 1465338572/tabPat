@@ -42,4 +42,8 @@ public class ArticlesDo implements Serializable {
      * 文章是否展示
      */
     private Boolean articleShow;
+    /**
+     * 文章封面
+     */
+    private String articleImg;
 }

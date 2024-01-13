@@ -28,7 +28,13 @@ public class ArticlesForm implements Serializable {
      * 文章是否展示
      */
     private Boolean articleShow;
-
+    /**
+     * 文章封面
+     */
+    private String articleImg;
+    /**
+     * 批量的id，删除使用
+     */
     private List<String> articleIds;
 
 }

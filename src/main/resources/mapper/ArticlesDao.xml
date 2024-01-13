@@ -23,7 +23,8 @@
                              article_date,
                              article_like_count,
                              user_id,
-                             article_show)
+                             article_show,
+                             article_img)
         VALUES (#{articleId},
                 #{articleTitle},
                 #{articleContent},
@@ -31,7 +32,8 @@
                 #{articleDate},
                 #{articleLikeCount},
                 #{userId},
-                #{articleShow})
+                #{articleShow},
+                #{articleImg})
     </insert>
 
     <update id="updateById" parameterType="com.example.tabpat.domain.ArticlesDo">
@@ -54,6 +56,9 @@
             </if>
             <if test="et.articleShow!=null">
                 article_show = #{et.articleShow}
+            </if>
+            <if test="et.articleImg!=null">
+                article_show = #{et.articleImg}
             </if>
         </set>
         WHERE article_id = #{et.articleId}

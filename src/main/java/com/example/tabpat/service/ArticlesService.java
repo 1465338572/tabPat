@@ -89,6 +89,8 @@ public class ArticlesService extends BaseService {
         ArticlesDto articlesDto = new ArticlesDto();
 
         String content = FileUtils.fileRead(articlesDo.getArticleContent());
+        String img = FileUtils.fileRead(articlesDo.getArticleImg());
+
         articlesDto.setArticleId(articlesDo.getArticleId());
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
         articlesDto.setArticleContent(content);
@@ -96,6 +98,7 @@ public class ArticlesService extends BaseService {
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
+        articlesDto.setArticleImg(img);
         return articlesDto;
     }
 
@@ -125,7 +128,9 @@ public class ArticlesService extends BaseService {
 
             //文本文件创造
             String filPath = dirPath + "\\" + System.currentTimeMillis() + "txt.txt";
+            String imgPath = dirPath + "\\" + System.currentTimeMillis() + "img.txt";
             FileUtils.fileWrite(filPath, articlesForm.getArticleContent());
+            FileUtils.fileWrite(imgPath, articlesForm.getArticleImg());
 
             ArticlesDo articlesDo = BeanCopierUtil.create(articlesForm, ArticlesDo.class);
 
@@ -137,6 +142,7 @@ public class ArticlesService extends BaseService {
             articlesDo.setArticleDate(System.currentTimeMillis());
             articlesDo.setUserId(userId);
             articlesDo.setArticleShow(articlesForm.getArticleShow());
+            articlesDo.setArticleImg(imgPath);
             return articlesDo;
         } catch (Exception e) {
             throw new ServiceException(e);
@@ -168,7 +174,12 @@ public class ArticlesService extends BaseService {
             if (StringUtils.hasLength(articlesForm.getArticleContent())) {
                 FileUtils.fileDelete(articlesDo1.getArticleContent());
                 FileUtils.fileWrite(articlesDo1.getArticleContent(), articlesForm.getArticleContent());
-                articlesDo.setArticleContent(null);
+                articlesDo.setArticleContent(articlesDo1.getArticleContent());
+            }
+            if (StringUtils.hasLength(articlesForm.getArticleImg())) {
+                FileUtils.fileDelete(articlesDo1.getArticleImg());
+                FileUtils.fileWrite(articlesDo1.getArticleImg(), articlesForm.getArticleImg());
+                articlesDo.setArticleImg(articlesDo1.getArticleImg());
             }
             if (articlesForm.getArticleShow() != null) {
                 articlesDo.setArticleShow(articlesForm.getArticleShow());
@@ -188,6 +199,7 @@ public class ArticlesService extends BaseService {
                 ArticlesDo articlesDo = articlesDao.getArticlesByArticleId(articleId);
                 articlesDao.deleteById(articleId);
                 FileUtils.fileDelete(articlesDo.getArticleContent());
+                FileUtils.fileDelete(articlesDo.getArticleImg());
             }
             return Result.success(200, "博客删除成功");
         } catch (Exception e) {
