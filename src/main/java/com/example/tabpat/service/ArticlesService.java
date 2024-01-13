@@ -32,7 +32,6 @@ public class ArticlesService extends BaseService {
             QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
             wrapper.eq("user_id", userId);
             if (StringUtils.hasLength(articlesQuery.getArticlesTitle())) {
-                System.out.println(articlesQuery.getArticlesTitle());
                 wrapper.like("article_title", articlesQuery.getArticlesTitle());
             }
             wrapper.orderByDesc("article_date");
@@ -47,7 +46,7 @@ public class ArticlesService extends BaseService {
             }
 
             for (ArticlesDo articlesDo : articlesDoList) {
-                ArticlesDto articlesDto = getShowDto(articlesDo);
+                ArticlesDto articlesDto = listShowDto(articlesDo);
                 articlesDtoList.add(articlesDto);
             }
             PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
@@ -60,13 +59,39 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesDto getShowDto(ArticlesDo articlesDo) throws IOException {
+    private ArticlesDto listShowDto(ArticlesDo articlesDo) throws IOException {
         ArticlesDto articlesDto = new ArticlesDto();
 
 //        String content = FileUtils.fileRead(articlesDo.getArticleContent());
         articlesDto.setArticleId(articlesDo.getArticleId());
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
 //        articlesDto.setArticleContent(content);
+        articlesDto.setArticleView(articlesDo.getArticleView());
+        articlesDto.setArticleDate(articlesDo.getArticleDate());
+        articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
+        articlesDto.setArticleShow(articlesDo.getArticleShow());
+        return articlesDto;
+    }
+
+    @Transactional
+    public Result get(String articleId) throws ServiceException {
+        try {
+            ArticlesDo articlesDo = articlesDao.getArticlesByArticleId(articleId);
+            ArticlesDto articlesDto = getShowDto(articlesDo);
+            return Result.success(200, "获取成功", articlesDto);
+
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private ArticlesDto getShowDto(ArticlesDo articlesDo) throws IOException {
+        ArticlesDto articlesDto = new ArticlesDto();
+
+        String content = FileUtils.fileRead(articlesDo.getArticleContent());
+        articlesDto.setArticleId(articlesDo.getArticleId());
+        articlesDto.setArticleTitle(articlesDo.getArticleTitle());
+        articlesDto.setArticleContent(content);
         articlesDto.setArticleView(articlesDo.getArticleView());
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());

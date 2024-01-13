@@ -38,6 +38,23 @@ public class ArticlesController {
         return result;
     }
 
+    @GetMapping(value = "/secure/getArticle/{article_id}")
+    @ResponseBody
+    public Result get(@PathVariable("article_id") String articleId, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.get(articleId);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
     @PostMapping(value = "/secure/addArticle")
     @ResponseBody
     public Result save(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) {
