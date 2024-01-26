@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.LabelDao">
+
+    <select id="selectAll" resultType="com.example.tabpat.domain.LabelDo">
+        SELECT a.*, b.* FROM user_label a
+        LEFT OUTER JOIN label b
+        ON a.label_id = b.label_id
+        WHERE a.user_id = #{userId}
+        <if test="labelName!=null">
+            AND b.label_name = #{labelName}
+        </if>
+    </select>
+
+    <select id="getLabelByLabelId" resultType="com.example.tabpat.domain.LabelDo">
+        SELECT a.*, b.* FROM user_label a
+                                 LEFT OUTER JOIN label b
+                                                 ON a.label_id = b.label_id
+        WHERE a.user_id = #{userId} AND b.label_id = #{labelId}
+    </select>
+
+    <select id="getLabelByLabelName" resultType="com.example.tabpat.domain.LabelDo">
+        SELECT a.*, b.* FROM user_label a
+        LEFT OUTER JOIN label b
+        ON a.label_id = b.label_id
+        WHERE a.user_id = #{userId} AND b.label_name = #{labelName}
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.LabelDo" useGeneratedKeys="true" keyProperty="labelId">
+        INSERT INTO label(label_id,
+                          label_name)
+        VALUES (#{labelId},
+                #{labelName})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.tabpat.domain.LabelDo">
+        UPDATE label
+        <set>
+            <if test="et.labelName!=null">
+                label_name = #{et.labelName},
+            </if>
+        </set>
+        WHERE label_id = #{et.labelId}
+    </update>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.LabelDo">
+        DELETE
+        FROM label
+        WHERE label_id = #{labelId}
+    </delete>
+</mapper>

@@ -23,6 +23,12 @@ public class BaseService {
 
     protected ArticlesDao articlesDao;
 
+    protected LabelDao labelDao;
+
+    protected UserLabelDao userLabelDao;
+
+    protected ArticlesLabelDao articlesLabelDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -39,16 +45,37 @@ public class BaseService {
     }
 
     @Autowired
-    public void setUserThreadlDao(UserThreadDao userThreadDao) { this.userThreadDao = userThreadDao; }
+    public void setUserThreadlDao(UserThreadDao userThreadDao) {
+        this.userThreadDao = userThreadDao;
+    }
 
     @Autowired
-    public void setApiKeyDao(ApiKeyDao apiKeyDao){ this.apiKeyDao = apiKeyDao; }
+    public void setApiKeyDao(ApiKeyDao apiKeyDao) {
+        this.apiKeyDao = apiKeyDao;
+    }
 
     @Autowired
-    public void setAppDao(AppDao appDao){ this.appDao = appDao;}
+    public void setAppDao(AppDao appDao) {
+        this.appDao = appDao;
+    }
 
     @Autowired
-    public void setArticlesDao(ArticlesDao articlesDao){ this.articlesDao = articlesDao; }
+    public void setArticlesDao(ArticlesDao articlesDao) {
+        this.articlesDao = articlesDao;
+    }
+
+    @Autowired
+    public void setLabelDao(LabelDao labelDao) {
+        this.labelDao = labelDao;
+    }
+
+    @Autowired
+    public void setUserLabelDao(UserLabelDao userLabelDao){
+        this.userLabelDao = userLabelDao;
+    }
+
+    @Autowired
+    public void setArticlesLabelDao(ArticlesLabelDao articlesLabelDao){ this.articlesLabelDao = articlesLabelDao; }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";

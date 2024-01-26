@@ -38,6 +38,23 @@ public class ArticlesController {
         return result;
     }
 
+    @GetMapping(value = "/secure/listWidthLabel/{label_id}")
+    @ResponseBody
+    public Result listWidthLabel(@UnderlineToCamel ArticlesQuery articlesQuery,@PathVariable("label_id") String labelId, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.listWidthLabel(articlesQuery,labelId);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
     @GetMapping(value = "/secure/getArticle/{article_id}")
     @ResponseBody
     public Result get(@PathVariable("article_id") String articleId, HttpServletResponse response) {
@@ -102,7 +119,6 @@ public class ArticlesController {
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
-            throw new ServiceException(e);
         }
         return result;
     }

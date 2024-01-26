@@ -8,10 +8,11 @@ import java.io.Serializable;
 
 @Data
 @ToString
-public class ArticlesQuery implements Serializable {
+public class LabelQuery implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    private String articlesTitle;
+
+    private String labelName;
     private Integer pageNum;
     private Integer pageSize;
 }

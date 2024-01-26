@@ -1,50 +1,69 @@
 package com.example.tabpat.web;
 
+import com.example.tabpat.annotation.UnderlineToCamel;
 import com.example.tabpat.code.HttpStatusCode;
-import com.example.tabpat.form.LoginForm;
+import com.example.tabpat.form.LabelForm;
 import com.example.tabpat.form.UserForm;
-import com.example.tabpat.query.UserQuery;
-import com.example.tabpat.service.LoginService;
+import com.example.tabpat.query.ArticlesQuery;
+import com.example.tabpat.query.LabelQuery;
+import com.example.tabpat.service.LabelService;
 import com.example.tabpat.service.Result;
-import com.example.tabpat.service.UserService;
 import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
-
 @RestController
-public class UserController {
 
+public class LabelController {
+
+
+    private LabelService labelService;
     @Autowired
-    private LoginService loginService;
-    @Autowired
-    private UserService userService;
-
-    /**
-     * 登录返回token
-     */
-    @PostMapping(value = "/public/login")
-    @ResponseBody
-    public Result login(@RequestBody LoginForm loginForm, HttpServletResponse response) {
-
-        try {
-            Map map = loginService.login(loginForm);
-            return Result.success(HttpStatusCode.OK, "登录成功", map);
-        } catch (RuntimeException re) {
-            response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.failure(HttpStatusCode.SERVICEERROR, re.getMessage());
-        }
+    public void setLabelService(LabelService labelService){
+        this.labelService = labelService;
     }
 
-    @PostMapping(value = "/public/getUser")
+    @GetMapping(value = "/secure/listLabel")
     @ResponseBody
-    public Result getUser(@RequestBody UserQuery userQuery,HttpServletResponse response) {
+    public Result list(@UnderlineToCamel LabelQuery labelQuery, HttpServletResponse response) {
         Result result;
         try {
-            result =userService.getUser(userQuery);
+            result = labelService.list(labelQuery);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/secure/getLabel/{label_name}")
+    @ResponseBody
+    public Result get(@PathVariable("label_name") String labelName, HttpServletResponse response) {
+        Result result;
+        try {
+            result = labelService.get(labelName);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/secure/addLabel")
+    @ResponseBody
+    public Result save(@RequestBody LabelForm labelForm, HttpServletResponse response) {
+        Result result;
+        try {
+            result =labelService.save(labelForm);
             if (result.getCode() != 200){
                 response.setStatus(HttpStatusCode.SERVICEERROR);
                 return result;
@@ -56,12 +75,12 @@ public class UserController {
         return result;
     }
 
-    @PostMapping(value = "/public/addUser")
+    @PutMapping(value = "/secure/updateLabel")
     @ResponseBody
-    public Result save(@RequestBody UserForm userForm,HttpServletResponse response) {
+    public Result update(@RequestBody LabelForm labelForm, HttpServletResponse response) {
         Result result;
         try {
-            result =userService.save(userForm);
+            result =labelService.update(labelForm);
             if (result.getCode() != 200){
                 response.setStatus(HttpStatusCode.SERVICEERROR);
                 return result;
@@ -73,39 +92,22 @@ public class UserController {
         return result;
     }
 
-    @PutMapping(value = "/secure/updateUser")
+    @DeleteMapping(value = "/secure/deleteLabel")
     @ResponseBody
-    public Result update(@RequestBody UserForm userForm,HttpServletResponse response) {
+    public Result delete(@RequestBody LabelForm labelForm, HttpServletResponse response) throws ServiceException {
         Result result;
-        try {
-            result = userService.update(userForm);
+        try{
+            result = labelService.delete(labelForm);
+
             if (result.getCode() != 200){
                 response.setStatus(HttpStatusCode.SERVICEERROR);
                 return result;
             }
-        } catch (ServiceException e) {
+        }catch (ServiceException e){
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+
         }
-
-        return result;
-    }
-
-    @PutMapping(value = "/public/updatePassword")
-    @ResponseBody
-    public Result updatePassword(@RequestBody UserForm userForm,HttpServletResponse response) {
-        Result result;
-        try {
-            result = userService.updatePassword(userForm);
-            if (result.getCode() != 200){
-                response.setStatus(HttpStatusCode.SERVICEERROR);
-                return result;
-            }
-        } catch (ServiceException e) {
-            response.setStatus(HttpStatusCode.SERVICEERROR);
-            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
-        }
-
         return result;
     }
 }

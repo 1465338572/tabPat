@@ -1,10 +1,14 @@
 package com.example.tabpat.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.tabpat.dao.ArticlesLabelDao;
 import com.example.tabpat.domain.ArticlesDo;
+import com.example.tabpat.domain.ArticlesLabelDo;
+import com.example.tabpat.domain.LabelDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.dto.ArticlesDto;
 import com.example.tabpat.form.ArticlesForm;
+import com.example.tabpat.form.ArticlesLabelForm;
 import com.example.tabpat.query.ArticlesQuery;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
@@ -12,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.protobuf.ServiceException;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -23,6 +28,11 @@ import java.util.List;
 
 @Service
 public class ArticlesService extends BaseService {
+
+    protected ArticlesLabelService articlesLabelService;
+
+    @Autowired
+    public void setArticlesLabelService(ArticlesLabelService articlesLabelService){ this.articlesLabelService = articlesLabelService;}
 
     @Transactional
     public Result list(ArticlesQuery articlesQuery) throws ServiceException {
@@ -46,7 +56,7 @@ public class ArticlesService extends BaseService {
             }
 
             for (ArticlesDo articlesDo : articlesDoList) {
-                ArticlesDto articlesDto = listShowDto(articlesDo);
+                ArticlesDto articlesDto = listShowDto(articlesDo,userId);
                 articlesDtoList.add(articlesDto);
             }
             PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
@@ -59,11 +69,16 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesDto listShowDto(ArticlesDo articlesDo) throws IOException {
+    private ArticlesDto listShowDto(ArticlesDo articlesDo,String userId) throws IOException {
         ArticlesDto articlesDto = new ArticlesDto();
-
+        String articleId = articlesDo.getArticleId();
+        ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId,null);
+        if (articlesLabelDo != null){
+            LabelDo labelDo = labelDao.getLabelByLabelId(userId,articlesLabelDo.getLabelId());
+            articlesDto.setLabelName(labelDo.getLabelName());
+        }
 //        String content = FileUtils.fileRead(articlesDo.getArticleContent());
-        articlesDto.setArticleId(articlesDo.getArticleId());
+        articlesDto.setArticleId(articleId);
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
 //        articlesDto.setArticleContent(content);
         articlesDto.setArticleView(articlesDo.getArticleView());
@@ -71,6 +86,49 @@ public class ArticlesService extends BaseService {
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
         return articlesDto;
+    }
+
+
+    @Transactional
+    public Result listWidthLabel(ArticlesQuery articlesQuery, String labelId) throws ServiceException {
+        try {
+            List<ArticlesLabelDo> ArticlesLabelDoLists = articlesLabelDao.selectArticlesLabel(labelId);
+            UserDo userDo = userDao.getUserByName(getCurrentUsername());
+            String userId = userDo.getUserId();
+            QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", userId);
+            if (StringUtils.hasLength(articlesQuery.getArticlesTitle())) {
+                wrapper.like("article_title", articlesQuery.getArticlesTitle());
+            }
+            wrapper.orderByDesc("article_date");
+            List<String> articlesLabelIds = new ArrayList<>();
+            for (ArticlesLabelDo articlesLabelDo : ArticlesLabelDoLists){
+                articlesLabelIds.add(articlesLabelDo.getArticlesId());
+            }
+            wrapper.in("article_id",articlesLabelIds);
+
+            //启动pagehelper
+            PageHelper.startPage(articlesQuery.getPageNum(), articlesQuery.getPageSize());
+            List<ArticlesDo> articlesDoList = articlesDao.selectList(wrapper);
+            //使用源数据记录total
+            PageInfo<ArticlesDo> articlesDoPageInfo = new PageInfo<>(articlesDoList);
+            List<ArticlesDto> articlesDtoList = new ArrayList<>();
+            if (articlesDoList.isEmpty()) {
+                return Result.success(200, "获取成功", articlesDoList);
+            }
+
+            for (ArticlesDo articlesDo : articlesDoList) {
+                ArticlesDto articlesDto = listShowDto(articlesDo,userId);
+                articlesDtoList.add(articlesDto);
+            }
+            PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
+            //将源数据total赋值给dtoTotal
+            articlesDtoPageInfo.setTotal(articlesDoPageInfo.getTotal());
+            return Result.success(200, "获取成功", articlesDtoPageInfo);
+
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Transactional
@@ -114,10 +172,20 @@ public class ArticlesService extends BaseService {
             FileUtils.mkdir(dirPath);
             ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, dirPath);
             articlesDao.insert(articlesDo);
+            //标签博客管理
+            ArticlesLabelForm articlesLabelForm = buildALForm(articlesForm,articlesDo);
+            articlesLabelService.save(articlesLabelForm);
             return Result.success(200, "博客已保存", articlesDo.getArticleId());
         } catch (Exception e) {
             throw new ServiceException(e);
         }
+    }
+
+    private ArticlesLabelForm buildALForm(ArticlesForm articlesForm,ArticlesDo articlesDo){
+        ArticlesLabelForm articlesLabelForm = new ArticlesLabelForm();
+        articlesLabelForm.setArticlesId(articlesDo.getArticleId());
+        articlesLabelForm.setLabelId(articlesForm.getLabelId());
+        return articlesLabelForm;
     }
 
     private ArticlesDo buildArticlesSave(ArticlesForm articlesForm, String userId, String dirPath) throws ServiceException {
@@ -195,12 +263,18 @@ public class ArticlesService extends BaseService {
     public Result delete(ArticlesForm articlesForm) throws ServiceException {
         try {
             List<String> articleIds = articlesForm.getArticleIds();
+
+            ArticlesLabelForm articlesLabelForm = new ArticlesLabelForm();
+            articlesLabelForm.setArticlesIds(articleIds);
+            articlesLabelService.delete(articlesLabelForm);
+
             for (String articleId : articleIds) {
                 ArticlesDo articlesDo = articlesDao.getArticlesByArticleId(articleId);
                 articlesDao.deleteById(articleId);
                 FileUtils.fileDelete(articlesDo.getArticleContent());
                 FileUtils.fileDelete(articlesDo.getArticleImg());
             }
+
             return Result.success(200, "博客删除成功");
         } catch (Exception e) {
             throw new ServiceException(e);

@@ -33,6 +33,10 @@ public class ArticlesForm implements Serializable {
      */
     private String articleImg;
     /**
+     * 标签id
+     */
+    private String labelId;
+    /**
      * 批量的id，删除使用
      */
     private List<String> articleIds;

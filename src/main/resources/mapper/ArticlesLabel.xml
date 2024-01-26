@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.ArticlesLabelDao">
+
+    <select id="getArticlesLabel" resultType="com.example.tabpat.domain.ArticlesLabelDo">
+        SELECT al.*, l.* ,a.* FROM articles_label al
+        LEFT OUTER JOIN label l
+        ON al.label_id = l.label_id
+        LEFT OUTER JOIN articles a
+        ON al.articles_id = a.article_id
+        <where>
+               1=1
+            <if test="labelId != null">
+                AND al.label_id = #{labelId}
+            </if>
+            <if test="articlesId != null">
+                AND al.articles_id = #{articlesId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectArticlesLabel" resultType="com.example.tabpat.domain.ArticlesLabelDo">
+        SELECT al.*, l.* ,a.* FROM articles_label al
+        LEFT OUTER JOIN label l
+        ON al.label_id = l.label_id
+        LEFT OUTER JOIN articles a
+        ON al.articles_id = a.article_id
+        <where>
+            1=1
+            <if test="labelId != null">
+                AND al.label_id = #{labelId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getCountById" resultType="java.lang.Integer">
+        SELECT COUNT(articles_id) FROM articles_label WHERE label_id = #{labelId}
+
+    </select>
+    <insert id="insert" parameterType="com.example.tabpat.domain.ArticlesLabelDo" useGeneratedKeys="true" keyProperty="articlesId">
+        INSERT INTO articles_label(label_id,
+                          articles_id)
+        VALUES (#{labelId},
+                #{articlesId})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.tabpat.domain.ArticlesLabelDo">
+        UPDATE articles_label
+        <set>
+            <if test="et.labelId!=null">
+                label_id = #{et.labelId},
+            </if>
+        </set>
+        WHERE articles_id = #{et.articlesId}
+    </update>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.ArticlesLabelDo">
+        DELETE
+        FROM articles_label
+        WHERE articles_id = #{articlesId}
+    </delete>
+</mapper>

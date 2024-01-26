@@ -42,4 +42,8 @@ public class ArticlesDto implements Serializable {
      * 文章封面
      */
     private String articleImg;
+    /**
+     * 标签名称
+     */
+    private String labelName;
 }

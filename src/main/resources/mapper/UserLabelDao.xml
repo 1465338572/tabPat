@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.UserLabelDao">
+
+    <select id="getUserLabelByUserId" resultType="com.example.tabpat.domain.UserLabelDo">
+        SELECT *
+        FROM user_label
+        WHERE label_id = #{labelId}
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.UserLabelDo" useGeneratedKeys="true" keyProperty="articleId">
+        INSERT INTO user_label(label_id,
+                          user_id)
+        VALUES (#{labelId},
+                #{userId})
+    </insert>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.UserLabelDo">
+        DELETE
+        FROM user_label
+        WHERE label_id = #{labelId}
+    </delete>
+</mapper>
