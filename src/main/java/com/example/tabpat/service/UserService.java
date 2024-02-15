@@ -18,11 +18,15 @@ import com.example.tabpat.util.Utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.ServiceException;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.io.File;
+import java.io.IOException;
 
 
 @Service
@@ -35,8 +39,9 @@ public class UserService extends BaseService {
     public void setUserCheck(UserCheck userCheck) {
         this.userCheck = userCheck;
     }
+
     @Autowired
-    public void setClientUtil(ClientUtil clientUtil){
+    public void setClientUtil(ClientUtil clientUtil) {
         this.clientUtil = clientUtil;
     }
 
@@ -49,7 +54,7 @@ public class UserService extends BaseService {
             }
             UserDo userDo = userDao.getUserByName(userQuery.getUsername());
             UserDto userDto = buildUserGet(userDo);
-            return Result.success(200, "用户创建成功",userDto);
+            return Result.success(200, "用户创建成功", userDto);
         } catch (Exception e) {
             throw new ServiceException(e);
         }
@@ -62,12 +67,16 @@ public class UserService extends BaseService {
             if (result.getCode() != 200) {
                 return result;
             }
-            UserDo userDo = buildUserSave(userForm);
+            File directory = new File("");
+            String dirPath = directory.getCanonicalPath() + "\\" + PrimaryKeyUtil.get();
+            FileUtils.mkdir(dirPath);
+
+            UserDo userDo = buildUserSave(userForm, dirPath);
             UserRoleDo userRoleDo = buildUserRoleSave(userDo);
             userDao.insert(userDo);
             userRoleDao.insert(userRoleDo);
-            UserThreadDo userThreadDo = getThread(userForm);
-            userThreadDao.insert(userThreadDo);
+//            UserThreadDo userThreadDo = getThread(userForm);
+//            userThreadDao.insert(userThreadDo);
             return Result.success(200, "用户创建成功");
         } catch (Exception e) {
             throw new ServiceException(e);
@@ -89,8 +98,19 @@ public class UserService extends BaseService {
         }
     }
 
-    private UserDto buildUserGet(UserDo userDo){
-        return BeanCopierUtil.create(userDo, UserDto.class);
+    private UserDto buildUserGet(UserDo userDo) throws IOException {
+
+        String photo = FileUtils.fileRead(userDo.getPhoto());
+        UserDto userDto = BeanCopierUtil.create(userDo, UserDto.class);
+        userDto.setUsername(userDo.getUsername());
+        userDto.setEmail(userDo.getEmail());
+        userDto.setBirthDay(userDo.getBirthDay());
+        userDto.setCreateTime(userDo.getCreateTime());
+        userDto.setUpdateTime(userDo.getUpdateTime());
+        userDto.setPhone(userDo.getPhone());
+        userDto.setPhoto(photo);
+
+        return userDto;
     }
 
     @Transactional
@@ -111,8 +131,13 @@ public class UserService extends BaseService {
         }
     }
 
-    private UserDo buildUserSave(UserForm userForm) throws ServiceException {
+    private UserDo buildUserSave(UserForm userForm, String dirPath) throws ServiceException {
         try {
+
+            //头像图片路径
+            String imgPath = dirPath + "\\" + System.currentTimeMillis() + "img.txt";
+            FileUtils.fileWrite(imgPath, userForm.getPhoto());
+
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             UserDo userDo = BeanCopierUtil.create(userForm, UserDo.class);
             String userId = PrimaryKeyUtil.get();
@@ -120,7 +145,7 @@ public class UserService extends BaseService {
             userDo.setUsername(userForm.getUsername());
             String password = encoder.encode(userForm.getPassword());
             userDo.setPassword(password);
-            if (StringUtils.hasLength(userForm.getQq())){
+            if (StringUtils.hasLength(userForm.getQq())) {
                 userDo.setQq(userForm.getQq());
             }
             if (StringUtils.hasLength(userForm.getWeChat())) {
@@ -139,7 +164,7 @@ public class UserService extends BaseService {
                 userDo.setPhone(userForm.getPhone());
             }
             if (StringUtils.hasLength(userForm.getPhoto())) {
-                userDo.setPhoto(userForm.getPhoto());
+                userDo.setPhoto(imgPath);
             }
             return userDo;
         } catch (Exception e) {
@@ -164,7 +189,7 @@ public class UserService extends BaseService {
             arrayMessage.add(roleMessage);
             data.put("messages", arrayMessage);
 
-            String response = clientUtil.doPost("https://api.openai.com/v1/threads",data);
+            String response = clientUtil.doPost("https://api.openai.com/v1/threads", data);
 
             if (response != null) {
                 // 处理响应
@@ -186,6 +211,8 @@ public class UserService extends BaseService {
             String username = getCurrentUsername();
             UserDo dbUserDo = userDao.getUserByName(username);
             UserDo userDo = BeanCopierUtil.create(dbUserDo, UserDo.class);
+            UserDo userDo1 = userDao.getUserByName(username);
+
             userDo.setUsername(username);
             if (StringUtils.hasText(userForm.getPassword())) {
                 userDo.setPassword(encoder.encode(userForm.getPassword()));
@@ -210,7 +237,8 @@ public class UserService extends BaseService {
                 userDo.setPhone(userForm.getPhone());
             }
             if (StringUtils.hasLength(userForm.getPhoto())) {
-                userDo.setPhoto(userForm.getPhoto());
+                FileUtils.fileDelete(userDo1.getPhoto());
+                FileUtils.fileWrite(userDo1.getPhoto(), userForm.getPhoto());
             }
             return userDo;
         } catch (Exception e) {

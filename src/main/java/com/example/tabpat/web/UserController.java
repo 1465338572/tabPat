@@ -58,7 +58,7 @@ public class UserController {
 
     @PostMapping(value = "/public/addUser")
     @ResponseBody
-    public Result save(@RequestBody UserForm userForm,HttpServletResponse response) {
+    public Result save(@RequestBody UserForm userForm,HttpServletResponse response) throws ServiceException {
         Result result;
         try {
             result =userService.save(userForm);
@@ -69,6 +69,9 @@ public class UserController {
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+
+            throw new ServiceException(e);
+
         }
         return result;
     }

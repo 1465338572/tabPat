@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 @Component
 public class ClientUtil {
 
-    String apiKey = "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";
+    String apiKey = "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";
 
     public String doPost(String url, JSONObject data) {
 
