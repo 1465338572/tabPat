@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.ArticlesCountDao">
+
+    <select id="selectList" resultType="com.example.tabpat.domain.ArticlesCountDo">
+        SELECT *
+        FROM articles_count ${ew.customSqlSegment}
+    </select>
+
+    <select id="getLast" resultType="com.example.tabpat.domain.ArticlesCountDo">
+        SELECT *
+        FROM articles_count WHERE user_id = #{userId}
+        ORDER BY date DESC limit 1;
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.ArticlesCountDo" useGeneratedKeys="true"
+            keyProperty="date">
+        INSERT INTO articles_count(date,
+                             like_count,
+                             user_id)
+        VALUES (#{date},
+                #{likeCount},
+                #{userId})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.tabpat.domain.ArticlesCountDo">
+        UPDATE articles
+        <set>
+            <if test="et.articleTitle!=null">
+                article_title = #{et.articleTitle},
+            </if>
+            <if test="et.articleContent!=null">
+                article_content = #{et.articleContent},
+            </if>
+            <if test="et.articleView!=null">
+                article_view = #{et.articleView},
+            </if>
+            <if test="et.articleDate!=null">
+                article_date = #{et.articleDate},
+            </if>
+            <if test="et.articleLikeCount!=null">
+                article_like_count = #{et.articleLikeCount},
+            </if>
+            <if test="et.articleShow!=null">
+                article_show = #{et.articleShow}
+            </if>
+            <if test="et.articleImg!=null">
+                article_show = #{et.articleImg}
+            </if>
+        </set>
+        WHERE article_id = #{et.articleId}
+    </update>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.ArticlesCountDo">
+        DELETE
+        FROM articles
+        WHERE article_id = #{articleId}
+    </delete>
+</mapper>

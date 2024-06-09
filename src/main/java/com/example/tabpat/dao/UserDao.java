@@ -5,7 +5,10 @@ import com.example.tabpat.domain.UserDo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserDao extends BaseMapper<UserDo> {
     UserDo getUserByName(@Param("username") String username);
+    List<UserDo> getUserList();
 }

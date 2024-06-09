@@ -6,6 +6,10 @@
         FROM users
         WHERE username = #{username};
     </select>
+    <select id="getUserList" resultType="com.example.tabpat.domain.UserDo">
+        SELECT user_id, username
+        FROM users
+    </select>
 
     <insert id="insert" parameterType="com.example.tabpat.domain.UserDo" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO users(user_id,

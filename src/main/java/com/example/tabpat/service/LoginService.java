@@ -4,7 +4,6 @@ import com.example.tabpat.config.JwtConfig;
 import com.example.tabpat.domain.RoleDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.domain.UserRoleDo;
-import com.example.tabpat.domain.UserThreadDo;
 import com.example.tabpat.form.LoginForm;
 import com.example.tabpat.util.JwtTokenUtil;
 import com.example.tabpat.util.RedisUtils;
@@ -17,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpClient;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 

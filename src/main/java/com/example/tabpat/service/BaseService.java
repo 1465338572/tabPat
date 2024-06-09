@@ -15,10 +15,6 @@ public class BaseService {
     protected UserDao userDao;
     protected UserRoleDao userRoleDao;
 
-    protected UserThreadDao userThreadDao;
-
-    protected ApiKeyDao apiKeyDao;
-
     protected AppDao appDao;
 
     protected ArticlesDao articlesDao;
@@ -28,6 +24,8 @@ public class BaseService {
     protected UserLabelDao userLabelDao;
 
     protected ArticlesLabelDao articlesLabelDao;
+
+    protected ArticlesCountDao articlesCountDao;
 
     @Autowired
     public void setUserDao(UserDao userDao) {
@@ -42,16 +40,6 @@ public class BaseService {
     @Autowired
     public void setUserRoleDao(UserRoleDao userRoleDao) {
         this.userRoleDao = userRoleDao;
-    }
-
-    @Autowired
-    public void setUserThreadlDao(UserThreadDao userThreadDao) {
-        this.userThreadDao = userThreadDao;
-    }
-
-    @Autowired
-    public void setApiKeyDao(ApiKeyDao apiKeyDao) {
-        this.apiKeyDao = apiKeyDao;
     }
 
     @Autowired
@@ -76,6 +64,9 @@ public class BaseService {
 
     @Autowired
     public void setArticlesLabelDao(ArticlesLabelDao articlesLabelDao){ this.articlesLabelDao = articlesLabelDao; }
+
+    @Autowired
+    public void setArticlesCountDao(ArticlesCountDao articlesCountDao){ this.articlesCountDao = articlesCountDao; }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
