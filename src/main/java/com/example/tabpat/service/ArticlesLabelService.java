@@ -15,7 +15,7 @@ import static com.example.tabpat.code.HttpStatusCode.OK;
 
 
 @Service
-public class ArticlesLabelService extends BaseService{
+public class ArticlesLabelService extends BaseService {
 
     @Transactional
     public Result save(ArticlesLabelForm articlesLabelForm) throws ServiceException {
@@ -29,8 +29,8 @@ public class ArticlesLabelService extends BaseService{
         }
     }
 
-    private ArticlesLabelDo buildArticlesLabelSave(ArticlesLabelForm articlesLabelForm){
-        ArticlesLabelDo articlesLabelDo = BeanCopierUtil.create(articlesLabelForm,ArticlesLabelDo.class);
+    private ArticlesLabelDo buildArticlesLabelSave(ArticlesLabelForm articlesLabelForm) {
+        ArticlesLabelDo articlesLabelDo = BeanCopierUtil.create(articlesLabelForm, ArticlesLabelDo.class);
         articlesLabelDo.setArticlesId(articlesLabelForm.getArticlesId());
         articlesLabelDo.setLabelId(articlesLabelForm.getLabelId());
         return articlesLabelDo;
@@ -46,12 +46,14 @@ public class ArticlesLabelService extends BaseService{
             throw new ServiceException(e);
         }
     }
-    public ArticlesLabelDo buildArticlesLabelUpdate(ArticlesLabelForm articlesLabelForm){
-        ArticlesLabelDo articlesLabelDo = BeanCopierUtil.create(articlesLabelForm,ArticlesLabelDo.class);
+
+    public ArticlesLabelDo buildArticlesLabelUpdate(ArticlesLabelForm articlesLabelForm) {
+        ArticlesLabelDo articlesLabelDo = BeanCopierUtil.create(articlesLabelForm, ArticlesLabelDo.class);
         articlesLabelDo.setArticlesId(articlesLabelForm.getArticlesId());
         articlesLabelDo.setLabelId(articlesLabelForm.getLabelId());
         return articlesLabelDo;
     }
+
     @Transactional
     public Integer getCount(ArticlesLabelForm articlesLabelForm) throws ServiceException {
 
@@ -60,20 +62,19 @@ public class ArticlesLabelService extends BaseService{
         } catch (Exception e) {
             throw new ServiceException(e);
         }
-
     }
 
 
     @Transactional
-    public Result delete(ArticlesLabelForm articlesLabelForm) throws ServiceException{
-        try{
+    public Result delete(ArticlesLabelForm articlesLabelForm) throws ServiceException {
+        try {
             List<String> articlesIds = articlesLabelForm.getArticlesIds();
-            for (String articlesId : articlesIds){
-                ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articlesId,null);
+            for (String articlesId : articlesIds) {
+                ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articlesId, null);
                 articlesLabelDao.deleteById(articlesLabelDo);
             }
             return Result.success(OK, "删除成功");
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new ServiceException(e);
         }
     }

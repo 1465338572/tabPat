@@ -112,7 +112,12 @@ public class ArticlesService extends BaseService {
             for (ArticlesLabelDo articlesLabelDo : ArticlesLabelDoLists) {
                 articlesLabelIds.add(articlesLabelDo.getArticlesId());
             }
-            wrapper.in("article_id", articlesLabelIds);
+            //防止无数据报错的临时解决办法 --事实上根本毫无头绪，可能本身逻辑就有问题，但修改颇为麻烦
+            if (!articlesLabelIds.isEmpty()) {
+                wrapper.in("article_id", articlesLabelIds);
+            } else {
+                wrapper.in("article_id", articlesLabelIds.add("0"));
+            }
 
             //启动pagehelper
             PageHelper.startPage(articlesQuery.getPageNum(), articlesQuery.getPageSize());
