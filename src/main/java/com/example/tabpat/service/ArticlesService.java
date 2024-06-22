@@ -12,6 +12,7 @@ import com.example.tabpat.form.ArticlesLabelForm;
 import com.example.tabpat.query.ArticlesQuery;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
+import com.example.tabpat.util.Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.protobuf.ServiceException;
@@ -23,8 +24,11 @@ import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticlesService extends BaseService {
@@ -32,8 +36,11 @@ public class ArticlesService extends BaseService {
     protected ArticlesLabelService articlesLabelService;
 
     @Autowired
-    public void setArticlesLabelService(ArticlesLabelService articlesLabelService){ this.articlesLabelService = articlesLabelService;}
+    public void setArticlesLabelService(ArticlesLabelService articlesLabelService) {
+        this.articlesLabelService = articlesLabelService;
+    }
 
+    //获取文章列表并分页
     @Transactional
     public Result list(ArticlesQuery articlesQuery) throws ServiceException {
         try {
@@ -56,7 +63,7 @@ public class ArticlesService extends BaseService {
             }
 
             for (ArticlesDo articlesDo : articlesDoList) {
-                ArticlesDto articlesDto = listShowDto(articlesDo,userId);
+                ArticlesDto articlesDto = listShowDto(articlesDo, userId);
                 articlesDtoList.add(articlesDto);
             }
             PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
@@ -69,12 +76,12 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesDto listShowDto(ArticlesDo articlesDo,String userId) throws IOException {
+    private ArticlesDto listShowDto(ArticlesDo articlesDo, String userId) throws IOException {
         ArticlesDto articlesDto = new ArticlesDto();
         String articleId = articlesDo.getArticleId();
-        ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId,null);
-        if (articlesLabelDo != null){
-            LabelDo labelDo = labelDao.getLabelByLabelId(userId,articlesLabelDo.getLabelId());
+        ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId, null);
+        if (articlesLabelDo != null) {
+            LabelDo labelDo = labelDao.getLabelByLabelId(userId, articlesLabelDo.getLabelId());
             articlesDto.setLabelName(labelDo.getLabelName());
         }
 //        String content = FileUtils.fileRead(articlesDo.getArticleContent());
@@ -88,7 +95,7 @@ public class ArticlesService extends BaseService {
         return articlesDto;
     }
 
-
+    //各标签下文章
     @Transactional
     public Result listWidthLabel(ArticlesQuery articlesQuery, String labelId) throws ServiceException {
         try {
@@ -102,10 +109,10 @@ public class ArticlesService extends BaseService {
             }
             wrapper.orderByDesc("article_date");
             List<String> articlesLabelIds = new ArrayList<>();
-            for (ArticlesLabelDo articlesLabelDo : ArticlesLabelDoLists){
+            for (ArticlesLabelDo articlesLabelDo : ArticlesLabelDoLists) {
                 articlesLabelIds.add(articlesLabelDo.getArticlesId());
             }
-            wrapper.in("article_id",articlesLabelIds);
+            wrapper.in("article_id", articlesLabelIds);
 
             //启动pagehelper
             PageHelper.startPage(articlesQuery.getPageNum(), articlesQuery.getPageSize());
@@ -118,7 +125,7 @@ public class ArticlesService extends BaseService {
             }
 
             for (ArticlesDo articlesDo : articlesDoList) {
-                ArticlesDto articlesDto = listShowDto(articlesDo,userId);
+                ArticlesDto articlesDto = listShowDto(articlesDo, userId);
                 articlesDtoList.add(articlesDto);
             }
             PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
@@ -160,6 +167,7 @@ public class ArticlesService extends BaseService {
         return articlesDto;
     }
 
+    //文章保存
     @Transactional
     public Result save(ArticlesForm articlesForm) throws ServiceException {
         try {
@@ -173,7 +181,7 @@ public class ArticlesService extends BaseService {
             ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, dirPath);
             articlesDao.insert(articlesDo);
             //标签博客管理
-            ArticlesLabelForm articlesLabelForm = buildALForm(articlesForm,articlesDo);
+            ArticlesLabelForm articlesLabelForm = buildALForm(articlesForm, articlesDo);
             articlesLabelService.save(articlesLabelForm);
             return Result.success(200, "博客已保存", articlesDo.getArticleId());
         } catch (Exception e) {
@@ -181,7 +189,7 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesLabelForm buildALForm(ArticlesForm articlesForm,ArticlesDo articlesDo){
+    private ArticlesLabelForm buildALForm(ArticlesForm articlesForm, ArticlesDo articlesDo) {
         ArticlesLabelForm articlesLabelForm = new ArticlesLabelForm();
         articlesLabelForm.setArticlesId(articlesDo.getArticleId());
         articlesLabelForm.setLabelId(articlesForm.getLabelId());
@@ -217,7 +225,7 @@ public class ArticlesService extends BaseService {
         }
     }
 
-
+    //文章编辑更新
     @Transactional
     public Result update(ArticlesForm articlesForm) throws ServiceException {
         try {
@@ -259,6 +267,7 @@ public class ArticlesService extends BaseService {
         }
     }
 
+    //文章删除
     @Transactional
     public Result delete(ArticlesForm articlesForm) throws ServiceException {
         try {
@@ -279,6 +288,57 @@ public class ArticlesService extends BaseService {
         } catch (Exception e) {
             throw new ServiceException(e);
         }
+    }
+
+    //每日文章统计
+    @Transactional
+    public Result articlesTimeCount(String year) throws ServiceException {
+        try {
+            UserDo userDo = userDao.getUserByName(getCurrentUsername());
+            String userId = userDo.getUserId();
+            QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
+            wrapper.eq("user_id", userId);
+            wrapper.orderByDesc("article_date");
+            List<ArticlesDo> articlesDoList = articlesDao.selectList(wrapper);
+            if (articlesDoList.isEmpty()) {
+                return Result.success(200, "获取成功", articlesDoList);
+            }
+            ArrayList<String> timeList = new ArrayList<>();
+            for (ArticlesDo articlesDo : articlesDoList) {
+                if (year != null && !year.isEmpty()) {
+                    if (Utils.timestampToTime(articlesDo.getArticleDate(), "year").equals(year)) {
+                        String time = Utils.timestampToTime(articlesDo.getArticleDate(), "day");
+                        timeList.add(time);
+                    }
+                }
+            }
+
+            List<List<Object>> articlesTimeCount = getArticlesTimeCount(timeList);
+
+            return Result.success(200, "查询成功", articlesTimeCount);
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    //计数
+    private static List<List<Object>> getArticlesTimeCount(ArrayList<String> timeList) {
+        if (timeList == null) {
+            return null;
+        }
+        Map<String, Integer> dateCountMap = new HashMap<>();
+        for (String time : timeList) {
+            dateCountMap.put(time, dateCountMap.getOrDefault(time, 0) + 1);
+        }
+
+        List<List<Object>> articlesTimeCount = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : dateCountMap.entrySet()) {
+            List<Object> dateCountPair = new ArrayList<>();
+            dateCountPair.add(entry.getKey());
+            dateCountPair.add(entry.getValue());
+            articlesTimeCount.add(dateCountPair);
+        }
+        return articlesTimeCount;
     }
 
 }

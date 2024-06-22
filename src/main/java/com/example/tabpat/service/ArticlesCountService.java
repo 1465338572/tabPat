@@ -16,8 +16,10 @@ import java.util.List;
 
 import static com.example.tabpat.code.HttpStatusCode.OK;
 
+//此service可能冗余
 @Service
 public class ArticlesCountService extends BaseService {
+    //点赞数统计
     @Transactional
     public Result list() throws ServiceException {
         try {
