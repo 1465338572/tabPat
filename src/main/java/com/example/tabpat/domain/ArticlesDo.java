@@ -46,4 +46,9 @@ public class ArticlesDo implements Serializable {
      * 文章封面
      */
     private String articleImg;
+    /**
+     * 文章更新时间
+     */
+    private Long articleUpdateDate;
+
 }

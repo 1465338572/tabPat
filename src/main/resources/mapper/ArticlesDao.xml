@@ -48,8 +48,8 @@
             <if test="et.articleView!=null">
                 article_view = #{et.articleView},
             </if>
-            <if test="et.articleDate!=null">
-                article_date = #{et.articleDate},
+            <if test="et.articleUpdateDate!=null">
+                article_update_date = #{et.articleUpdateDate},
             </if>
             <if test="et.articleLikeCount!=null">
                 article_like_count = #{et.articleLikeCount},

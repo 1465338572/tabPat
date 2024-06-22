@@ -265,7 +265,7 @@ public class ArticlesService extends BaseService {
             if (articlesForm.getArticleShow() != null) {
                 articlesDo.setArticleShow(articlesForm.getArticleShow());
             }
-            articlesDo.setArticleDate(System.currentTimeMillis());
+            articlesDo.setArticleUpdateDate(System.currentTimeMillis());
             return articlesDo;
         } catch (Exception e) {
             throw new ServiceException(e);
