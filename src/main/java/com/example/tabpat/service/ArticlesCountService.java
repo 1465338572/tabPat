@@ -48,7 +48,7 @@ public class ArticlesCountService extends BaseService {
         articlesCountDto.setLikeCount(articlesCountDo.getLikeCount());
         return articlesCountDto;
     }
-
+    //每日统计点赞数量
     @Transactional
     @Scheduled(cron = "0 0 0 * * ?")
     public void save() throws ServiceException {
