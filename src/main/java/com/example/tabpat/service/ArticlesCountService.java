@@ -65,8 +65,6 @@ public class ArticlesCountService extends BaseService {
                 ArticlesCountDo newArticlesCountDo = buildArticlesCountSave(lastArticlesCount, userId);
                 articlesCountDao.insert(newArticlesCountDo);
             }
-            System.out.println(userDoList);
-
         } catch (Exception e) {
             throw new ServiceException(e);
         }
