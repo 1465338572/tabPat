@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.tabpat.dao.FileUploadDao">
+
+    <select id="selectList" resultType="com.example.tabpat.domain.FileUploadDo">
+        SELECT *
+        FROM user_file ${ew.customSqlSegment}
+    </select>
+
+    <insert id="insert" parameterType="com.example.tabpat.domain.FileUploadDo" useGeneratedKeys="true"
+            keyProperty="date">
+        INSERT INTO user_file(file_id,
+                              file_name,
+                              file,
+                              file_total_chunks,
+                              file_chunk_index,
+                              user_id)
+        VALUES (#{fileId},
+                #{fileName},
+                #{file},
+                #{fileTotalChunks},
+                #{fileChunkIndex},
+                #{userId})
+    </insert>
+
+    <delete id="deleteById" parameterType="com.example.tabpat.domain.FileUploadDo">
+        DELETE
+        FROM user_file
+        WHERE file_id = #{fileId}
+    </delete>
+</mapper>

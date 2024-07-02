@@ -27,6 +27,8 @@ public class BaseService {
 
     protected ArticlesCountDao articlesCountDao;
 
+    protected FileUploadDao fileUploadDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -67,6 +69,9 @@ public class BaseService {
 
     @Autowired
     public void setArticlesCountDao(ArticlesCountDao articlesCountDao){ this.articlesCountDao = articlesCountDao; }
+
+    @Autowired
+    public void setFileUploadDao(FileUploadDao fileUploadDao){ this.fileUploadDao = fileUploadDao; }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";
