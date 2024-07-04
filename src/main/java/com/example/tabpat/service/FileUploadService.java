@@ -86,6 +86,7 @@ public class FileUploadService extends BaseService {
 
     /**
      * 文件下载
+     * 使用nginx更加快速
      */
     public ResponseEntity<Resource> fileDownload(String fileId, HttpServletResponse response) throws ServiceException {
         try {
