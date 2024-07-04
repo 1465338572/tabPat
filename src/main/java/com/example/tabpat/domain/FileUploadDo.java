@@ -1,8 +1,12 @@
 package com.example.tabpat.domain;
 
+import lombok.Data;
+import lombok.ToString;
+
 import java.io.Serial;
 import java.io.Serializable;
-
+@Data
+@ToString
 public class FileUploadDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -18,14 +22,6 @@ public class FileUploadDo implements Serializable {
      * 文件地址
      */
     private String file;
-    /**
-     * 文件分片总数
-     */
-    private Integer fileTotalChunks;
-    /**
-     * 当前文件存储分片数
-     */
-    private Integer fileChunkIndex;
     /**
      * userId
      */

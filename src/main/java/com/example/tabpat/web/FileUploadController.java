@@ -4,14 +4,12 @@ import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.FileUploadForm;
 import com.example.tabpat.service.FileUploadService;
 import com.example.tabpat.service.Result;
-import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class FileUploadController {
@@ -24,7 +22,7 @@ public class FileUploadController {
 
     @PostMapping(value = "/secure/uploadFile")
     @ResponseBody
-    public Result fileUpload(FileUploadForm fileUploadForm, HttpServletResponse response) throws Exception {
+    public Result fileUpload(FileUploadForm fileUploadForm, HttpServletResponse response) {
         Result result;
         try {
             result = fileUploadService.uploadChunk(fileUploadForm);
@@ -37,6 +35,17 @@ public class FileUploadController {
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
         return result;
+    }
+
+    @GetMapping(value = "/secure/download/{file_id}")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadFile(@PathVariable("file_id") String fileId, HttpServletResponse response) {
+        try {
+            return fileUploadService.fileDownload(fileId, response);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

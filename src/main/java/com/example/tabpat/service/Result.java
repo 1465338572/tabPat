@@ -16,10 +16,6 @@ public class Result {
     private String message; //返回信息
     private Object data; //返回数据
 
-    private Result(){
-
-    }
-
     public Result(Integer code, String message){
         super();
         this.code = code;

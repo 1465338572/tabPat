@@ -8,20 +8,20 @@
         SELECT *
         FROM user_file ${ew.customSqlSegment}
     </select>
-
+    <select id="selectByFileId" resultType="com.example.tabpat.domain.FileUploadDo">
+        SELECT *
+        FROM user_file
+        WHERE file_id = #{fileId};
+    </select>
     <insert id="insert" parameterType="com.example.tabpat.domain.FileUploadDo" useGeneratedKeys="true"
             keyProperty="date">
         INSERT INTO user_file(file_id,
                               file_name,
                               file,
-                              file_total_chunks,
-                              file_chunk_index,
                               user_id)
         VALUES (#{fileId},
                 #{fileName},
                 #{file},
-                #{fileTotalChunks},
-                #{fileChunkIndex},
                 #{userId})
     </insert>
 

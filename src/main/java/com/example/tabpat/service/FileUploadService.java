@@ -1,15 +1,26 @@
 package com.example.tabpat.service;
 
+
+import com.example.tabpat.domain.FileUploadDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.form.FileUploadForm;
+import com.example.tabpat.util.BeanCopierUtil;
+import com.example.tabpat.util.PrimaryKeyUtil;
 import com.google.protobuf.ServiceException;
+import org.springframework.core.io.Resource;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +32,13 @@ public class FileUploadService extends BaseService {
     //文件上传状态
     private final Map<String, int[]> uploadProgress = new HashMap<String, int[]>();
 
-
+    /**
+     * 文件上传
+     *
+     * @param fileUploadForm
+     * @return
+     * @throws ServiceException
+     */
     @Transactional
     public Result uploadChunk(FileUploadForm fileUploadForm) throws ServiceException {
         try {
@@ -44,7 +61,8 @@ public class FileUploadService extends BaseService {
             }
 
             //保存分片
-            File chunkFile = new File(uploadDir + "/" + fileName + ".part" + chunkIndex);
+            String filePath = uploadDir + "/" + fileName;
+            File chunkFile = new File(filePath + ".part" + chunkIndex);
             try (FileOutputStream out = new FileOutputStream(chunkFile)) {
                 out.write(file.getBytes());
             }
@@ -55,11 +73,59 @@ public class FileUploadService extends BaseService {
                 uploadProgress.remove(fileHash);
             }
             processMap.put("progress", getNextChunkIndex(progress));
-            System.out.println(processMap);
+            //暂定功能，未上传不保存到数据库
+            if (getNextChunkIndex(progress) == -1) {
+                FileUploadDo fileUploadDo = buildFileUploadSave(fileUploadForm, userId, filePath);
+                fileUploadDao.insert(fileUploadDo);
+            }
             return Result.success(200, "file uploaded", processMap);
         } catch (Exception e) {
             throw new ServiceException(e);
         }
+    }
+
+    /**
+     * 文件下载
+     */
+    public ResponseEntity<Resource> fileDownload(String fileId, HttpServletResponse response) throws ServiceException {
+        try {
+            FileUploadDo fileUploadDo = fileUploadDao.selectByFileId(fileId);
+            //读取到流中
+            InputStream inputStream = new FileInputStream(fileUploadDo.getFile());
+            response.reset();
+            response.setContentType("application/octet-stream");
+            String fileName = fileUploadDo.getFileName();
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+            ServletOutputStream outputStream = response.getOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            inputStream.close();
+
+            ByteArrayResource resource = new ByteArrayResource(buffer);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", fileId);
+            return ResponseEntity.ok().headers(headers).body(resource);
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    /**
+     * 数据库保存信息
+     */
+
+    private FileUploadDo buildFileUploadSave(FileUploadForm fileUploadForm, String userId, String filePath) {
+        FileUploadDo fileUploadDo = BeanCopierUtil.create(fileUploadForm, FileUploadDo.class);
+        String fileId = PrimaryKeyUtil.get();
+        fileUploadDo.setFileId(fileId);
+        fileUploadDo.setFile(filePath);
+        fileUploadDo.setFileName(fileUploadForm.getFileName());
+        fileUploadDo.setUserId(userId);
+        return fileUploadDo;
     }
 
     /**
