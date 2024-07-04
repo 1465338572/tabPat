@@ -4,6 +4,7 @@ import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.FileUploadForm;
 import com.example.tabpat.service.FileUploadService;
 import com.example.tabpat.service.Result;
+import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ public class FileUploadController {
 
     @PostMapping(value = "/secure/uploadFile")
     @ResponseBody
-    public Result fileUpload(FileUploadForm fileUploadForm, HttpServletResponse response) {
+    public Result fileUpload(FileUploadForm fileUploadForm, HttpServletResponse response) throws Exception {
         Result result;
         try {
             result = fileUploadService.uploadChunk(fileUploadForm);

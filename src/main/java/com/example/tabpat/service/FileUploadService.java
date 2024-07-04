@@ -37,8 +37,10 @@ public class FileUploadService extends BaseService {
             File directory = new File("");
             String uploadDir = directory.getCanonicalPath() + "\\" + userId;
             int[] progress = uploadProgress.computeIfAbsent(fileHash, k -> new int[totalChunks]);
-            if (progress[chunkIndex] == 1){
-                return Result.success(200,"fileUpload");
+            Map<String, Integer> processMap = new HashMap<>();
+            if (progress[chunkIndex] == 1) {
+                processMap.put("progress", getNextChunkIndex(progress));
+                return Result.success(200, "fileUpload", processMap);
             }
 
             //保存分片
@@ -48,15 +50,31 @@ public class FileUploadService extends BaseService {
             }
             progress[chunkIndex] = 1;
 
-            if (isUploadComplete(progress)){
+            if (isUploadComplete(progress)) {
                 mergeChunk(uploadDir, fileName, totalChunks);
                 uploadProgress.remove(fileHash);
-
             }
-            return Result.success(200, "file uploaded");
+            processMap.put("progress", getNextChunkIndex(progress));
+            System.out.println(processMap);
+            return Result.success(200, "file uploaded", processMap);
         } catch (Exception e) {
             throw new ServiceException(e);
         }
+    }
+
+    /**
+     * 分片进度
+     *
+     * @param progress
+     * @return
+     */
+    private int getNextChunkIndex(int[] progress) {
+        for (int i = 0; i < progress.length; i++) {
+            if (progress[i] == 0) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private boolean isUploadComplete(int[] progress) {
@@ -78,7 +96,7 @@ public class FileUploadService extends BaseService {
                 boolean deleted = chunkFile.delete();
                 if (!deleted) {
                     // 或者抛出异常
-                     throw new IOException("删除文件失败：" + chunkFile.getAbsolutePath());
+                    throw new IOException("删除文件失败：" + chunkFile.getAbsolutePath());
                 }
             }
         }
