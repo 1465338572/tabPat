@@ -16,16 +16,22 @@
 
     <select id="getLabelByLabelId" resultType="com.example.tabpat.domain.LabelDo">
         SELECT a.*, b.* FROM user_label a
-                                 LEFT OUTER JOIN label b
-                                                 ON a.label_id = b.label_id
-        WHERE a.user_id = #{userId} AND b.label_id = #{labelId}
+        LEFT OUTER JOIN label b
+        ON a.label_id = b.label_id
+        WHERE
+        <if test="userId = null">
+            a.user_id = #{userId} AND
+        </if>
+        b.label_id = #{labelId}
     </select>
 
     <select id="getLabelByLabelName" resultType="com.example.tabpat.domain.LabelDo">
-        SELECT a.*, b.* FROM user_label a
-        LEFT OUTER JOIN label b
-        ON a.label_id = b.label_id
-        WHERE a.user_id = #{userId} AND b.label_name = #{labelName}
+        SELECT a.*, b.*
+        FROM user_label a
+                 LEFT OUTER JOIN label b
+                                 ON a.label_id = b.label_id
+        WHERE a.user_id = #{userId}
+          AND b.label_name = #{labelName}
     </select>
 
     <insert id="insert" parameterType="com.example.tabpat.domain.LabelDo" useGeneratedKeys="true" keyProperty="labelId">

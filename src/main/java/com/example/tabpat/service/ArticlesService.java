@@ -40,6 +40,53 @@ public class ArticlesService extends BaseService {
         this.articlesLabelService = articlesLabelService;
     }
 
+    @Transactional
+    public Result pubList(ArticlesQuery articlesQuery) throws ServiceException {
+        try {
+            QueryWrapper<ArticlesDo> queryWrapper = new QueryWrapper<>();
+            queryWrapper.orderByDesc("article_date");
+            PageHelper.startPage(articlesQuery.getPageNum(), articlesQuery.getPageSize());
+            List<ArticlesDo> articlesDoList = articlesDao.selectList(queryWrapper);
+            //使用源数据记录total
+            PageInfo<ArticlesDo> articlesDoPageInfo = new PageInfo<>(articlesDoList);
+            List<ArticlesDto> articlesDtoList = new ArrayList<>();
+            if (articlesDoList.isEmpty()) {
+                return Result.success(200, "获取成功", articlesDoList);
+            }
+
+            for (ArticlesDo articlesDo : articlesDoList) {
+
+                ArticlesDto articlesDto = pubListShowDto(articlesDo);
+                articlesDtoList.add(articlesDto);
+            }
+            PageInfo<ArticlesDto> articlesDtoPageInfo = new PageInfo<>(articlesDtoList);
+            articlesDtoPageInfo.setTotal(articlesDoPageInfo.getTotal());
+
+            return Result.success(200, "获取成功", articlesDtoPageInfo);
+        } catch (Exception e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private ArticlesDto pubListShowDto(ArticlesDo articlesDo) throws IOException {
+        ArticlesDto articlesDto = new ArticlesDto();
+        String articleId = articlesDo.getArticleId();
+        ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId, null);
+        if (articlesLabelDo != null) {
+            LabelDo labelDo = labelDao.getLabelByLabelId(articlesLabelDo.getLabelId());
+            articlesDto.setLabelName(labelDo.getLabelName());
+        }
+        String img = FileUtils.fileRead(articlesDo.getArticleImg());
+        articlesDto.setArticleId(articleId);
+        articlesDto.setArticleTitle(articlesDo.getArticleTitle());
+        articlesDto.setArticleView(articlesDo.getArticleView());
+        articlesDto.setArticleDate(articlesDo.getArticleDate());
+        articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
+        articlesDto.setArticleShow(articlesDo.getArticleShow());
+        articlesDto.setArticleImg(img);
+        return articlesDto;
+    }
+
     //获取文章列表并分页
     @Transactional
     public Result list(ArticlesQuery articlesQuery) throws ServiceException {
@@ -76,7 +123,7 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesDto listShowDto(ArticlesDo articlesDo, String userId) throws IOException {
+    private ArticlesDto listShowDto(ArticlesDo articlesDo, String userId) {
         ArticlesDto articlesDto = new ArticlesDto();
         String articleId = articlesDo.getArticleId();
         ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId, null);

@@ -21,6 +21,24 @@ public class ArticlesController {
         this.articlesService = articlesService;
     }
 
+    @GetMapping(value = "/public/pubList")
+    @ResponseBody
+    public Result pubList(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) throws ServiceException {
+        Result result;
+        try {
+            result = articlesService.pubList(articlesQuery);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+
+        }
+        return result;
+    }
+
     @GetMapping(value = "/secure/listArticle")
     @ResponseBody
     public Result list(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) {
