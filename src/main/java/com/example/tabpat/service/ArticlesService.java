@@ -228,7 +228,7 @@ public class ArticlesService extends BaseService {
             String userId = userDo.getUserId();
 
             File directory = new File("");
-            String dirPath = directory.getCanonicalPath() + "\\" + userId;
+            String dirPath = directory.getCanonicalPath() + "/" + userId;
             FileUtils.mkdir(dirPath);
             ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, dirPath);
             articlesDao.insert(articlesDo);
@@ -255,8 +255,8 @@ public class ArticlesService extends BaseService {
             String articleId = PrimaryKeyUtil.get();
 
             //文本文件创造
-            String filPath = dirPath + "\\" + System.currentTimeMillis() + "txt.txt";
-            String imgPath = dirPath + "\\" + System.currentTimeMillis() + "img.txt";
+            String filPath = dirPath + "/" + System.currentTimeMillis() + "txt.txt";
+            String imgPath = dirPath + "/" + System.currentTimeMillis() + "img.txt";
             FileUtils.fileWrite(filPath, articlesForm.getArticleContent());
             FileUtils.fileWrite(imgPath, articlesForm.getArticleImg());
 

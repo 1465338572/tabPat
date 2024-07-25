@@ -52,7 +52,7 @@ public class FileUploadService extends BaseService {
             String userId = userDo.getUserId();
             //获取文件夹
             File directory = new File("");
-            String uploadDir = directory.getCanonicalPath() + "\\" + userId;
+            String uploadDir = directory.getCanonicalPath() + "/" + userId;
             int[] progress = uploadProgress.computeIfAbsent(fileHash, k -> new int[totalChunks]);
             Map<String, Integer> processMap = new HashMap<>();
             if (progress[chunkIndex] == 1) {

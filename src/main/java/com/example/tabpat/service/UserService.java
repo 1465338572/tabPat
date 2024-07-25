@@ -61,7 +61,7 @@ public class UserService extends BaseService {
                 return result;
             }
             File directory = new File("");
-            String dirPath = directory.getCanonicalPath() + "\\" + PrimaryKeyUtil.get();
+            String dirPath = directory.getCanonicalPath() + "/" + PrimaryKeyUtil.get();
             FileUtils.mkdir(dirPath);
 
             UserDo userDo = buildUserSave(userForm, dirPath);
@@ -126,7 +126,7 @@ public class UserService extends BaseService {
         try {
 
             //头像图片路径
-            String imgPath = dirPath + "\\" + System.currentTimeMillis() + "img.txt";
+            String imgPath = dirPath + "/" + System.currentTimeMillis() + "img.txt";
             FileUtils.fileWrite(imgPath, userForm.getPhoto());
 
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
