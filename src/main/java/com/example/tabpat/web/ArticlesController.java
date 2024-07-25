@@ -21,6 +21,14 @@ public class ArticlesController {
         this.articlesService = articlesService;
     }
 
+    /**
+     * 获取所有博客文章
+     *
+     * @param articlesQuery
+     * @param response
+     * @return
+     * @throws ServiceException
+     */
     @GetMapping(value = "/public/pubList")
     @ResponseBody
     public Result pubList(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) throws ServiceException {
@@ -39,6 +47,37 @@ public class ArticlesController {
         return result;
     }
 
+    /**
+     * 获取单个博客
+     *
+     * @param articleId 博客id
+     * @param response
+     * @return
+     */
+    @GetMapping(value = "/public/getArticle/{article_id}")
+    @ResponseBody
+    public Result get(@PathVariable("article_id") String articleId, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.get(articleId);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取单个用户下的所有文章
+     *
+     * @param articlesQuery
+     * @param response
+     * @return
+     */
     @GetMapping(value = "/secure/listArticle")
     @ResponseBody
     public Result list(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) {
@@ -56,6 +95,14 @@ public class ArticlesController {
         return result;
     }
 
+    /**
+     * 获取文章标签
+     *
+     * @param articlesQuery
+     * @param labelId
+     * @param response
+     * @return
+     */
     @GetMapping(value = "/secure/listWidthLabel/{label_id}")
     @ResponseBody
     public Result listWidthLabel(@UnderlineToCamel ArticlesQuery articlesQuery, @PathVariable("label_id") String labelId, HttpServletResponse response) {
@@ -73,23 +120,13 @@ public class ArticlesController {
         return result;
     }
 
-    @GetMapping(value = "/secure/getArticle/{article_id}")
-    @ResponseBody
-    public Result get(@PathVariable("article_id") String articleId, HttpServletResponse response) {
-        Result result;
-        try {
-            result = articlesService.get(articleId);
-            if (result.getCode() != 200) {
-                response.setStatus(HttpStatusCode.SERVICEERROR);
-                return result;
-            }
-        } catch (ServiceException e) {
-            response.setStatus(HttpStatusCode.SERVICEERROR);
-            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
-        }
-        return result;
-    }
-
+    /**
+     * 文章保存
+     *
+     * @param articlesForm
+     * @param response
+     * @return
+     */
     @PostMapping(value = "/secure/addArticle")
     @ResponseBody
     public Result save(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) {
@@ -107,6 +144,13 @@ public class ArticlesController {
         return result;
     }
 
+    /**
+     * 文章更新
+     *
+     * @param articlesForm
+     * @param response
+     * @return
+     */
     @PutMapping(value = "/secure/updateArticle")
     @ResponseBody
     public Result update(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) {
@@ -124,6 +168,14 @@ public class ArticlesController {
         return result;
     }
 
+    /**
+     * 文章删除
+     *
+     * @param articlesForm
+     * @param response
+     * @return
+     * @throws ServiceException
+     */
     @DeleteMapping(value = "/secure/deleteArticle")
     @ResponseBody
     public Result delete(@RequestBody ArticlesForm articlesForm, HttpServletResponse response) throws ServiceException {
@@ -141,6 +193,13 @@ public class ArticlesController {
         return result;
     }
 
+    /**
+     * 每日文章统计
+     *
+     * @param year
+     * @param response
+     * @return
+     */
     @GetMapping(value = "/secure/getArticlesTimeCount")
     @ResponseBody
     public Result articlesTimeCount(@UnderlineToCamel String year, HttpServletResponse response) {
