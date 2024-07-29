@@ -49,41 +49,41 @@ public class ArticlesCountService extends BaseService {
         return articlesCountDto;
     }
     //每日统计点赞数量
-    @Transactional
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void save() throws ServiceException {
-        try {
-            //用户获取
-            List<UserDo> userDoList = userDao.getUserList();
-            for (UserDo userDo : userDoList) {
-                String userId = userDo.getUserId();
-                ArticlesCountDo lastArticlesCountDo = articlesCountDao.getLast(userId);
-                Integer lastArticlesCount = 0;
-                if (lastArticlesCountDo != null) {
-                    lastArticlesCount = lastArticlesCountDo.getLikeCount();
-                }
-                ArticlesCountDo newArticlesCountDo = buildArticlesCountSave(lastArticlesCount, userId);
-                articlesCountDao.insert(newArticlesCountDo);
-            }
-        } catch (Exception e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private ArticlesCountDo buildArticlesCountSave(Integer lastArticlesCount, String userId) {
-        ArticlesCountDo articlesCountDo = new ArticlesCountDo();
-        QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id", userId);
-        List<ArticlesDo> articlesDoList = articlesDao.selectList(wrapper);
-        Integer likeCount = 0;
-        for (ArticlesDo articlesDo : articlesDoList) {
-            likeCount += articlesDo.getArticleLikeCount();
-        }
-        likeCount -= lastArticlesCount;
-
-        articlesCountDo.setLikeCount(likeCount);
-        articlesCountDo.setDate(SystemClock.now());
-        articlesCountDo.setUserId(userId);
-        return articlesCountDo;
-    }
+//    @Transactional
+//    @Scheduled(cron = "0 0 0 * * ?")
+//    public void save() throws ServiceException {
+//        try {
+//            //用户获取
+//            List<UserDo> userDoList = userDao.getUserList();
+//            for (UserDo userDo : userDoList) {
+//                String userId = userDo.getUserId();
+//                ArticlesCountDo lastArticlesCountDo = articlesCountDao.getLast(userId);
+//                Integer lastArticlesCount = 0;
+//                if (lastArticlesCountDo != null) {
+//                    lastArticlesCount = lastArticlesCountDo.getLikeCount();
+//                }
+//                ArticlesCountDo newArticlesCountDo = buildArticlesCountSave(lastArticlesCount, userId);
+//                articlesCountDao.insert(newArticlesCountDo);
+//            }
+//        } catch (Exception e) {
+//            throw new ServiceException(e);
+//        }
+//    }
+//
+//    private ArticlesCountDo buildArticlesCountSave(Integer lastArticlesCount, String userId) {
+//        ArticlesCountDo articlesCountDo = new ArticlesCountDo();
+//        QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
+//        wrapper.eq("user_id", userId);
+//        List<ArticlesDo> articlesDoList = articlesDao.selectList(wrapper);
+//        Integer likeCount = 0;
+//        for (ArticlesDo articlesDo : articlesDoList) {
+//            likeCount += articlesDo.getArticleLikeCount();
+//        }
+//        likeCount -= lastArticlesCount;
+//
+//        articlesCountDo.setLikeCount(likeCount);
+//        articlesCountDo.setDate(SystemClock.now());
+//        articlesCountDo.setUserId(userId);
+//        return articlesCountDo;
+//    }
 }
