@@ -1,11 +1,13 @@
 package com.example.tabpat.util;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
 
 import java.net.InetAddress;
 
+@Log4j2
 public class IpUtils {
+
     //获取客户端IP
     public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
@@ -22,7 +24,7 @@ public class IpUtils {
                 try {
                     inet = InetAddress.getLocalHost();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
                 assert inet != null;
                 ip = inet.getHostAddress();

@@ -12,6 +12,7 @@ import com.example.tabpat.form.ArticlesLabelForm;
 import com.example.tabpat.query.ArticlesQuery;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
+import com.example.tabpat.util.RedisUtils;
 import com.example.tabpat.util.Utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,11 +34,19 @@ import java.util.Map;
 @Service
 public class ArticlesService extends BaseService {
 
-    protected ArticlesLabelService articlesLabelService;
+    private ArticlesLabelService articlesLabelService;
+    private RedisUtils redisUtils;
+
 
     @Autowired
     public void setArticlesLabelService(ArticlesLabelService articlesLabelService) {
         this.articlesLabelService = articlesLabelService;
+    }
+
+
+    @Autowired
+    public void setRedisUtils(RedisUtils redisUtils) {
+        this.redisUtils = redisUtils;
     }
 
     @Transactional
@@ -211,7 +220,8 @@ public class ArticlesService extends BaseService {
         articlesDto.setArticleId(articlesDo.getArticleId());
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
         articlesDto.setArticleContent(content);
-        articlesDto.setArticleView(articlesDo.getArticleView());
+        Long viewCount = redisUtils.hySize("ARTICLES_ID:" + articlesDo.getArticleId());
+        articlesDto.setArticleView(viewCount);
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
@@ -265,7 +275,7 @@ public class ArticlesService extends BaseService {
             articlesDo.setArticleId(articleId);
             articlesDo.setArticleTitle(articlesForm.getArticleTitle());
             articlesDo.setArticleContent(filPath);
-            articlesDo.setArticleView(0);
+            articlesDo.setArticleView(0L);
             articlesDo.setArticleLikeCount(0);
             articlesDo.setArticleDate(System.currentTimeMillis());
             articlesDo.setUserId(userId);
@@ -392,5 +402,4 @@ public class ArticlesService extends BaseService {
         }
         return articlesTimeCount;
     }
-
 }

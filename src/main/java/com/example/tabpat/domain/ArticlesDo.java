@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 @Data
 @ToString
 public class ArticlesDo implements Serializable {
@@ -25,7 +26,7 @@ public class ArticlesDo implements Serializable {
     /**
      * 浏览量
      */
-    private Integer articleView;
+    private Long articleView;
     /**
      * 发表时间
      */

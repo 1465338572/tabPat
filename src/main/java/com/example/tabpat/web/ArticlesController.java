@@ -1,5 +1,6 @@
 package com.example.tabpat.web;
 
+import com.example.tabpat.annotation.ArticlesView;
 import com.example.tabpat.annotation.UnderlineToCamel;
 import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.ArticlesForm;
@@ -56,6 +57,7 @@ public class ArticlesController {
      */
     @GetMapping(value = "/public/getArticle/{article_id}")
     @ResponseBody
+    @ArticlesView
     public Result get(@PathVariable("article_id") String articleId, HttpServletResponse response) {
         Result result;
         try {
