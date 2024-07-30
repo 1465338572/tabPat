@@ -58,7 +58,7 @@
                 article_show = #{et.articleShow}
             </if>
             <if test="et.articleImg!=null">
-                article_show = #{et.articleImg}
+                article_img = #{et.articleImg}
             </if>
         </set>
         WHERE article_id = #{et.articleId}
