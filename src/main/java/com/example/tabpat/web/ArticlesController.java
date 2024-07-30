@@ -73,6 +73,28 @@ public class ArticlesController {
         return result;
     }
 
+
+    /**
+     * 点赞
+     */
+    @PutMapping(value = "/public/likeArticle/{article_id}")
+    @ResponseBody
+    public Result like(@PathVariable("article_id") String articleId, HttpServletResponse response) {
+        Result result;
+        try {
+            result = articlesService.like(articleId);
+            if (result.getCode() != 200) {
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
+    }
+
+
     /**
      * 获取单个用户下的所有文章
      *
@@ -218,5 +240,4 @@ public class ArticlesController {
         }
         return result;
     }
-
 }

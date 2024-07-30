@@ -229,6 +229,22 @@ public class ArticlesService extends BaseService {
         return articlesDto;
     }
 
+    //文章点赞
+    @Transactional
+    public Result like(String articleId) throws ServiceException {
+        try {
+            ArticlesDo articlesDo = articlesDao.getArticlesByArticleId(articleId);
+            ArticlesDo articlesDos = new ArticlesDo();
+            articlesDos.setArticleId(articleId);
+            articlesDos.setArticleLikeCount(articlesDo.getArticleLikeCount() + 1);
+            articlesDao.updateById(articlesDos);
+            return Result.success(200, "点赞成功");
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new ServiceException(e);
+        }
+    }
+
     //文章保存
     @Transactional
     public Result save(ArticlesForm articlesForm) throws ServiceException {
