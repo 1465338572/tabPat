@@ -32,7 +32,7 @@ public class ArticlesController {
      */
     @GetMapping(value = "/public/pubList")
     @ResponseBody
-    public Result pubList(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) throws ServiceException {
+    public Result pubList(@UnderlineToCamel ArticlesQuery articlesQuery, HttpServletResponse response) {
         Result result;
         try {
             result = articlesService.pubList(articlesQuery);

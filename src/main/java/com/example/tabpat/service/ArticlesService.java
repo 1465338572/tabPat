@@ -115,7 +115,7 @@ public class ArticlesService extends BaseService {
             PageInfo<ArticlesDo> articlesDoPageInfo = new PageInfo<>(articlesDoList);
             List<ArticlesDto> articlesDtoList = new ArrayList<>();
             if (articlesDoList.isEmpty()) {
-                return Result.success(200, "获取成功", articlesDoList);
+                return Result.success(200, "获取成功", articlesDtoList);
             }
 
             for (ArticlesDo articlesDo : articlesDoList) {
@@ -140,10 +140,8 @@ public class ArticlesService extends BaseService {
             LabelDo labelDo = labelDao.getLabelByLabelId(userId, articlesLabelDo.getLabelId());
             articlesDto.setLabelName(labelDo.getLabelName());
         }
-//        String content = FileUtils.fileRead(articlesDo.getArticleContent());
         articlesDto.setArticleId(articleId);
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
-//        articlesDto.setArticleContent(content);
         articlesDto.setArticleView(articlesDo.getArticleView());
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());

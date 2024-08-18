@@ -10,32 +10,32 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class AppService extends BaseService{
+public class AppService extends BaseService {
     @Transactional
     public Result list() throws ServiceException {
-        try{
-            List<AppDo> appDoList  = appDao.selectList(null);
+        try {
+            List<AppDo> appDoList = appDao.selectList(null);
             List<AppDto> appDtoList = getAppDto(appDoList);
-            return Result.success(200,"路由查询成功",appDtoList);
-        }catch (Exception e){
+            return Result.success(200, "路由查询成功", appDtoList);
+        } catch (Exception e) {
             throw new ServiceException(e);
         }
     }
 
-    private List<AppDto> getAppDto(List<AppDo> appDos){
+    private List<AppDto> getAppDto(List<AppDo> appDos) {
         List<AppDto> appDtos = new ArrayList<>();
         Map<Long, AppDto> appDtoMap = new HashMap<>();
-        for (AppDo appDo : appDos){
+        for (AppDo appDo : appDos) {
             AppDto appDto = getAppDto(appDo);
             appDtos.add(appDto);
 
-            appDtoMap.put(appDo.getId(),appDto);
+            appDtoMap.put(appDo.getId(), appDto);
         }
 
-        for (AppDto appDto : appDtos){
-            if (appDto.getPid() != null && appDto.getPid() != 0){
+        for (AppDto appDto : appDtos) {
+            if (appDto.getPid() != null && appDto.getPid() != 0) {
                 AppDto parent = appDtoMap.get(appDto.getPid());
-                if (parent != null){
+                if (parent != null) {
                     parent.addChild(appDto);
                 }
             }
@@ -55,7 +55,7 @@ public class AppService extends BaseService{
         appDto.setIcon(appDo.getIcon());
         appDto.setPid(appDo.getPid());
         appDto.setPath(appDo.getPath());
-        if (appDo.getPos() != null){
+        if (appDo.getPos() != null) {
             String[] posArray = appDo.getPos().split(",");
             List<String> posList = new ArrayList<>(Arrays.asList(posArray));
             appDto.setPos(posList);
