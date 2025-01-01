@@ -54,7 +54,7 @@ public class FileUploadService extends BaseService {
             File directory = new File("");
             String uploadDir = directory.getCanonicalPath() + "/" + userId;
             int[] progress = uploadProgress.computeIfAbsent(fileHash, k -> new int[totalChunks]);
-            Map<String, Integer> processMap = new HashMap<>();
+            Map<String, Object> processMap = new HashMap<>();
             if (progress[chunkIndex] == 1) {
                 processMap.put("progress", getNextChunkIndex(progress));
                 return Result.success(200, "fileUpload", processMap);
@@ -73,9 +73,10 @@ public class FileUploadService extends BaseService {
                 uploadProgress.remove(fileHash);
             }
             processMap.put("progress", getNextChunkIndex(progress));
-            //暂定功能，未上传不保存到数据库
+            //暂定功能，未上传不保存到数据库 -1代表全部上传完成
             if (getNextChunkIndex(progress) == -1) {
                 FileUploadDo fileUploadDo = buildFileUploadSave(fileUploadForm, userId, filePath);
+                processMap.put("fileId",fileUploadDo.getFileId());
                 fileUploadDao.insert(fileUploadDo);
             }
             return Result.success(200, "file uploaded", processMap);
