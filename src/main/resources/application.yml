@@ -1,6 +1,6 @@
 spring:
-  mvc:
-    throw-exception-if-no-handler-found: true
+  main:
+    allow-bean-definition-overriding: true
   web:
     resources:
       add-mappings: false
@@ -16,7 +16,7 @@ spring:
       host: 127.0.0.1
       port: 6379
       timeout: 2000ms
-      password: 123456 #密码
+#      password: 123456 #密码
       jedis:
         pool:
           max-active: 10
@@ -46,7 +46,8 @@ mybatis-plus:
     call-setters-on-nulls: true
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+    #自动配置别名
+  type-aliases-package: com.example.tabpat.domain
 ### jwt
 jwt:
   ###过期时间 单位s

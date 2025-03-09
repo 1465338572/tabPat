@@ -14,6 +14,10 @@ import java.util.List;
 import static com.example.tabpat.code.HttpStatusCode.OK;
 
 
+/**
+ * @author ABin
+ * @date 2025/03/05
+ */
 @Service
 public class ArticlesLabelService extends BaseService {
 

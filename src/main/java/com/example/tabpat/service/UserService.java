@@ -12,18 +12,28 @@ import com.example.tabpat.util.PrimaryKeyUtil;
 import com.example.tabpat.util.Utils;
 import com.google.protobuf.ServiceException;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 
 @Service
 public class UserService extends BaseService {
+
+    private static final Logger logger = LogManager.getLogger(UserService.class);
+
+
     private UserCheck userCheck;
 
     private ClientUtil clientUtil;
@@ -53,20 +63,26 @@ public class UserService extends BaseService {
         }
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ServiceException.class)
     public Result save(UserForm userForm) throws ServiceException {
         try {
             Result result = userCheck.checkSave(userForm);
             if (result.getCode() != 200) {
                 return result;
             }
-            File directory = new File("");
-            String dirPath = directory.getCanonicalPath() + "/" + PrimaryKeyUtil.get();
-            FileUtils.mkdir(dirPath);
-
-            UserDo userDo = buildUserSave(userForm, dirPath);
-            UserRoleDo userRoleDo = buildUserRoleSave(userDo);
+            //创建用户id，并以此创建文件夹来存储用户文件
+            String userId = PrimaryKeyUtil.get();
+            //获取当前路径
+            Path currentPath = Paths.get(System.getProperty("user.dir"));
+            Path targetPath = currentPath.resolve(userId);
+            //创建目录
+            Files.createDirectories(targetPath);
+            String dirPath = targetPath.toAbsolutePath().toString();
+            //存储用户数据
+            UserDo userDo = buildUserSave(userForm, userId, dirPath);
             userDao.insert(userDo);
+            //存储用户角色
+            UserRoleDo userRoleDo = buildUserRoleSave(userDo);
             userRoleDao.insert(userRoleDo);
             return Result.success(200, "用户创建成功");
         } catch (Exception e) {
@@ -118,11 +134,12 @@ public class UserService extends BaseService {
             userDao.updateById(userDo);
             return Result.success(200, "用户更新成功");
         } catch (Exception e) {
+            logger.error("用户注册失败",e);
             throw new ServiceException(e);
         }
     }
 
-    private UserDo buildUserSave(UserForm userForm, String dirPath) throws ServiceException {
+    private UserDo buildUserSave(UserForm userForm,String userId, String dirPath) throws ServiceException {
         try {
 
             //头像图片路径
@@ -131,7 +148,6 @@ public class UserService extends BaseService {
 
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             UserDo userDo = BeanCopierUtil.create(userForm, UserDo.class);
-            String userId = PrimaryKeyUtil.get();
             userDo.setUserId(userId);
             userDo.setUsername(userForm.getUsername());
             String password = encoder.encode(userForm.getPassword());
@@ -159,6 +175,7 @@ public class UserService extends BaseService {
             }
             return userDo;
         } catch (Exception e) {
+            logger.error("用户注册失败",e);
             throw new ServiceException(e);
         }
     }

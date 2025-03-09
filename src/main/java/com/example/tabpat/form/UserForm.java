@@ -2,12 +2,14 @@ package com.example.tabpat.form;
 
 import lombok.Data;
 import lombok.ToString;
+import org.mapstruct.Mapper;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 @Data
 @ToString
+@Mapper
 public class UserForm implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

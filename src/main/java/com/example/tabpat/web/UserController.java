@@ -9,6 +9,8 @@ import com.example.tabpat.service.Result;
 import com.example.tabpat.service.UserService;
 import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.Map;
 
 @RestController
 public class UserController {
+    private static final Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
     private LoginService loginService;
@@ -33,9 +36,10 @@ public class UserController {
         try {
             Map map = loginService.login(loginForm);
             return Result.success(HttpStatusCode.OK, "登录成功", map);
-        } catch (RuntimeException re) {
+        } catch (RuntimeException e) {
+            logger.error("用户登录失败",e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
-            return Result.failure(HttpStatusCode.SERVICEERROR, re.getMessage());
+            return Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
     }
 
@@ -68,10 +72,8 @@ public class UserController {
             }
         } catch (ServiceException e) {
             response.setStatus(HttpStatusCode.SERVICEERROR);
+            logger.error("用户注册失败",e);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
-
-            throw new ServiceException(e);
-
         }
         return result;
     }

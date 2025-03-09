@@ -9,14 +9,14 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <typeAlias type="com.example.tabpat.domain.UserDo" alias="UserDo"/>
+        <typeAlias alias="UserDo" type="com.example.tabpat.domain.UserDo"/>
     </typeAliases>
 
-<!--    <plugins>-->
-<!--        &lt;!&ndash; com.github.pageHelper为PageHelper类所在包名 &ndash;&gt;-->
-<!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
-<!--            &lt;!&ndash; 使用下面的方式配置参数，后面会有所有的参数介绍 &ndash;&gt;-->
-<!--            <property name="param1" value="value1"/>-->
-<!--        </plugin>-->
-<!--    </plugins>-->
+    <!--    <plugins>-->
+    <!--        &lt;!&ndash; com.github.pageHelper为PageHelper类所在包名 &ndash;&gt;-->
+    <!--        <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+    <!--            &lt;!&ndash; 使用下面的方式配置参数，后面会有所有的参数介绍 &ndash;&gt;-->
+    <!--            <property name="param1" value="value1"/>-->
+    <!--        </plugin>-->
+    <!--    </plugins>-->
 </configuration>

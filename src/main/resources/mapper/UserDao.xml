@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.tabpat.dao.UserDao">
-    <select id="getUserByName" resultType="com.example.tabpat.domain.UserDo">
+    <select id="getUserByName" resultType="UserDo">
         SELECT *
         FROM users
         WHERE username = #{username};
     </select>
-    <select id="getUserList" resultType="com.example.tabpat.domain.UserDo">
+    <select id="getUserList" resultType="UserDo">
         SELECT user_id, username
         FROM users
     </select>
 
-    <insert id="insert" parameterType="com.example.tabpat.domain.UserDo" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insert" parameterType="UserDo" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO users(user_id,
                           username,
                           password,
@@ -38,7 +38,7 @@
                 #{photo})
     </insert>
 
-    <update id="updateById" parameterType="com.example.tabpat.domain.UserDo">
+    <update id="updateById" parameterType="UserDo">
         UPDATE users
         <set>
             password = #{et.password},

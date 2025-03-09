@@ -5,6 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+/**
+ * @author ABin
+ * @date 2025/03/05
+ */
 @SpringBootApplication
 @MapperScan(basePackages = "com.example.tabpat.dao")
 @EnableScheduling

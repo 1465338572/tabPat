@@ -7,6 +7,8 @@ import com.example.tabpat.form.FileUploadForm;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
 import com.google.protobuf.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,15 +31,17 @@ import java.util.Map;
  */
 @Service
 public class FileUploadService extends BaseService {
+    private static final Logger logger = LogManager.getLogger(FileUploadService.class);
+
     //文件上传状态
     private final Map<String, int[]> uploadProgress = new HashMap<String, int[]>();
 
     /**
      * 文件上传
      *
-     * @param fileUploadForm
-     * @return
-     * @throws ServiceException
+     * @param fileUploadForm -文件form表单
+     * @return -网络状态码
+     * @throws ServiceException -服务错误
      */
     @Transactional
     public Result uploadChunk(FileUploadForm fileUploadForm) throws ServiceException {
@@ -81,6 +85,7 @@ public class FileUploadService extends BaseService {
             }
             return Result.success(200, "file uploaded", processMap);
         } catch (Exception e) {
+            logger.error("文件上传失败",e);
             throw new ServiceException(e);
         }
     }
