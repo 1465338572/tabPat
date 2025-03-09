@@ -220,7 +220,6 @@ public class ArticlesService extends BaseService {
         ArticlesDto articlesDto = new ArticlesDto();
 
         String content = FileUtils.fileRead(articlesDo.getArticleContent());
-        String img = FileUtils.fileRead(articlesDo.getArticleImg());
 
         articlesDto.setArticleId(articlesDo.getArticleId());
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
@@ -230,7 +229,7 @@ public class ArticlesService extends BaseService {
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
-        articlesDto.setArticleImg(img);
+        articlesDto.setArticleImg(articlesDo.getArticleImg());
         return articlesDto;
     }
 
@@ -337,9 +336,7 @@ public class ArticlesService extends BaseService {
                 articlesDo.setArticleContent(articlesDo1.getArticleContent());
             }
             if (StringUtils.hasLength(articlesForm.getArticleImg())) {
-                FileUtils.fileDelete(articlesDo1.getArticleImg());
-                FileUtils.fileWrite(articlesDo1.getArticleImg(), articlesForm.getArticleImg());
-                articlesDo.setArticleImg(articlesDo1.getArticleImg());
+                articlesDo.setArticleImg(articlesForm.getArticleImg());
             }
             if (articlesForm.getArticleShow() != null) {
                 articlesDo.setArticleShow(articlesForm.getArticleShow());

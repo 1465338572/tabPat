@@ -77,6 +77,7 @@ public class ArticlesController {
                 return result;
             }
         } catch (ServiceException e) {
+            logger.error("博客获取失败", e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
@@ -123,6 +124,7 @@ public class ArticlesController {
                 return result;
             }
         } catch (ServiceException e) {
+            logger.error("博客获取失败", e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
@@ -197,6 +199,7 @@ public class ArticlesController {
                 return result;
             }
         } catch (ServiceException e) {
+            logger.error("博客更新失败", e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
