@@ -153,6 +153,7 @@ public class ArticlesService extends BaseService {
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
+        articlesDto.setArticleImg(articlesDo.getArticleImg());
         return articlesDto;
     }
 
@@ -258,7 +259,7 @@ public class ArticlesService extends BaseService {
             String userId = userDo.getUserId();
 
             //获取上传目录
-            Path uploadDirPath = Paths.get(System.getProperty("user.dir"), userId, "blog" );
+            Path uploadDirPath = Paths.get(System.getProperty("user.dir"), userId, "blog");
             Files.createDirectories(uploadDirPath);
 
             ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, uploadDirPath.toString());
@@ -267,7 +268,7 @@ public class ArticlesService extends BaseService {
             ArticlesLabelForm articlesLabelForm = buildALForm(articlesForm, articlesDo);
             articlesLabelService.save(articlesLabelForm);
             return Result.success(200, "博客已保存", articlesDo.getArticleId());
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new ServiceException("文件处理错误: " + e.getMessage(), e);
         } catch (Exception e) {
             throw new ServiceException("保存文章失败: " + e.getMessage(), e);
