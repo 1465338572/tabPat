@@ -35,7 +35,8 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/public/**").permitAll() // 为了方便测试，放行post
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/files/**").permitAll()
                         .requestMatchers("/secure/**").authenticated()
                 );
         return http.build();

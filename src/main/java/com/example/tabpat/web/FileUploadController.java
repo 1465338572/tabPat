@@ -35,20 +35,21 @@ public class FileUploadController {
                 return result;
             }
         } catch (Exception e) {
-            logger.error("文件上传失败",e);
+            logger.error("文件上传失败", e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
         return result;
     }
 
-    @GetMapping(value = "/secure/download/{file_id}")
+    @GetMapping(value = "/files/download/{file_id}")
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable("file_id") String fileId, HttpServletResponse response) {
         try {
             return fileUploadService.fileDownload(fileId, response);
 
         } catch (Exception e) {
+            logger.error("文件下载失败", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
