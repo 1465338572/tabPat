@@ -6,14 +6,24 @@ import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.ArticlesForm;
 import com.example.tabpat.query.ArticlesQuery;
 import com.example.tabpat.service.ArticlesService;
+import com.example.tabpat.service.FileUploadService;
 import com.example.tabpat.service.Result;
 import com.google.protobuf.ServiceException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 博客
+ *
+ * @author ABin
+ * @date 2025/03/10
+ */
 @RestController
 public class ArticlesController {
+    private static final Logger logger = LogManager.getLogger(ArticlesController.class);
 
     private ArticlesService articlesService;
 
@@ -162,6 +172,7 @@ public class ArticlesController {
                 return result;
             }
         } catch (ServiceException e) {
+            logger.error("博客保存失败", e);
             response.setStatus(HttpStatusCode.SERVICEERROR);
             result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }

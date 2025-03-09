@@ -26,11 +26,18 @@ import org.springframework.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author ABin
+ * @date 2025/03/10
+ */
 @Service
 public class ArticlesService extends BaseService {
 
@@ -251,17 +258,20 @@ public class ArticlesService extends BaseService {
             UserDo userDo = userDao.getUserByName(getCurrentUsername());
             String userId = userDo.getUserId();
 
-            File directory = new File("");
-            String dirPath = directory.getCanonicalPath() + "/" + userId;
-            FileUtils.mkdir(dirPath);
-            ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, dirPath);
+            //获取上传目录
+            Path uploadDirPath = Paths.get(System.getProperty("user.dir"), userId, "blog" );
+            Files.createDirectories(uploadDirPath);
+
+            ArticlesDo articlesDo = buildArticlesSave(articlesForm, userId, uploadDirPath.toString());
             articlesDao.insert(articlesDo);
             //标签博客管理
             ArticlesLabelForm articlesLabelForm = buildALForm(articlesForm, articlesDo);
             articlesLabelService.save(articlesLabelForm);
             return Result.success(200, "博客已保存", articlesDo.getArticleId());
+        }catch (IOException e) {
+            throw new ServiceException("文件处理错误: " + e.getMessage(), e);
         } catch (Exception e) {
-            throw new ServiceException(e);
+            throw new ServiceException("保存文章失败: " + e.getMessage(), e);
         }
     }
 
@@ -279,10 +289,8 @@ public class ArticlesService extends BaseService {
             String articleId = PrimaryKeyUtil.get();
 
             //文本文件创造
-            String filPath = dirPath + "/" + System.currentTimeMillis() + "txt.txt";
-            String imgPath = dirPath + "/" + System.currentTimeMillis() + "img.txt";
+            String filPath = dirPath + "/" + System.currentTimeMillis() + "blog.txt";
             FileUtils.fileWrite(filPath, articlesForm.getArticleContent());
-            FileUtils.fileWrite(imgPath, articlesForm.getArticleImg());
 
             ArticlesDo articlesDo = BeanCopierUtil.create(articlesForm, ArticlesDo.class);
 
@@ -294,7 +302,7 @@ public class ArticlesService extends BaseService {
             articlesDo.setArticleDate(System.currentTimeMillis());
             articlesDo.setUserId(userId);
             articlesDo.setArticleShow(articlesForm.getArticleShow());
-            articlesDo.setArticleImg(imgPath);
+            articlesDo.setArticleImg(articlesForm.getArticleImg());
             return articlesDo;
         } catch (Exception e) {
             throw new ServiceException(e);
