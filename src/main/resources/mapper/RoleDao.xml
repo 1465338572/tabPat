@@ -4,9 +4,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.tabpat.dao.RoleDao">
 
-    <select id="getRoleById" resultType="com.example.tabpat.domain.RoleDo">
-        SELECT *
+    <select id="selectList" resultType="RoleDo">
+        SELECT role_id,
+               role_name,
+               create_time,
+               update_time,
+               description
+        FROM roles ${ew.customSqlSegment}
+    </select>
+
+    <select id="getRoleById" resultType="RoleDo">
+        SELECT role_id,
+               role_name,
+               create_time,
+               update_time,
+               description
         FROM roles
         WHERE role_id = #{roleId};
     </select>
+
+    <select id="getRoleByRoleName" resultType="RoleDo">
+        SELECT role_id,
+        FROM roles
+        WHERE role_name = #{roleName};
+    </select>
+
+    <insert id="insert" parameterType="RoleDo" useGeneratedKeys="true" keyProperty="roleId">
+        INSERT INTO roles(role_id,
+                          role_name,
+                          create_time,
+                          update_time,
+                          description)
+        VALUES (#{roleId},
+                #{roleName},
+                #{createTime},
+                #{updateTime},
+                #{description})
+    </insert>
+
+    <update id="updateById" parameterType="RoleDo">
+        UPDATE roles
+        <set>
+            role_name = #{et.roleName},
+            update_time = #{et.updateTime},
+            description = #{et.description}
+        </set>
+        WHERE role_id = #{et.roleId}
+    </update>
+
+    <delete id="deleteById" parameterType="RoleDo">
+        DELETE
+        FROM roles
+        WHERE role_id = #{roleId}
+    </delete>
 </mapper>

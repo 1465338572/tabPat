@@ -13,5 +13,5 @@ public class UserRoleDo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String userId;
-    private Integer roleId;
+    private String roleId;
 }

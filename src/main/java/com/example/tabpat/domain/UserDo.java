@@ -8,6 +8,10 @@ import org.mapstruct.Mapper;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * @author ABin
+ * @date 2025/03/11
+ */
 @Data
 @ToString
 @Mapper

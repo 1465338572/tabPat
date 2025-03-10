@@ -1,13 +1,13 @@
 package com.example.tabpat.service;
 
 import com.example.tabpat.check.UserCheck;
+import com.example.tabpat.domain.RoleDo;
 import com.example.tabpat.domain.UserDo;
 import com.example.tabpat.domain.UserRoleDo;
 import com.example.tabpat.dto.UserDto;
 import com.example.tabpat.form.UserForm;
 import com.example.tabpat.query.UserQuery;
 import com.example.tabpat.util.BeanCopierUtil;
-import com.example.tabpat.util.ClientUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
 import com.example.tabpat.util.Utils;
 import com.google.protobuf.ServiceException;
@@ -23,11 +23,16 @@ import org.springframework.util.StringUtils;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
 
+/**
+ * 用户服务
+ *
+ * @author ABin
+ * @date 2025/03/10
+ */
 @Service
 public class UserService extends BaseService {
 
@@ -36,16 +41,10 @@ public class UserService extends BaseService {
 
     private UserCheck userCheck;
 
-    private ClientUtil clientUtil;
 
     @Autowired
     public void setUserCheck(UserCheck userCheck) {
         this.userCheck = userCheck;
-    }
-
-    @Autowired
-    public void setClientUtil(ClientUtil clientUtil) {
-        this.clientUtil = clientUtil;
     }
 
     @Transactional
@@ -57,8 +56,9 @@ public class UserService extends BaseService {
             }
             UserDo userDo = userDao.getUserByName(userQuery.getUsername());
             UserDto userDto = buildUserGet(userDo);
-            return Result.success(200, "用户创建成功", userDto);
+            return Result.success(200, "用户查询成功", userDto);
         } catch (Exception e) {
+            logger.error("用户查询失败", e);
             throw new ServiceException(e);
         }
     }
@@ -86,6 +86,7 @@ public class UserService extends BaseService {
             userRoleDao.insert(userRoleDo);
             return Result.success(200, "用户创建成功");
         } catch (Exception e) {
+            logger.error("用户创建失败", e);
             throw new ServiceException(e);
         }
     }
@@ -101,6 +102,7 @@ public class UserService extends BaseService {
             userDao.updateById(userDo);
             return Result.success(200, "用户更新成功");
         } catch (Exception e) {
+            logger.error("用户更新失败", e);
             throw new ServiceException(e);
         }
     }
@@ -134,12 +136,12 @@ public class UserService extends BaseService {
             userDao.updateById(userDo);
             return Result.success(200, "用户更新成功");
         } catch (Exception e) {
-            logger.error("用户注册失败",e);
+            logger.error("用户注册失败", e);
             throw new ServiceException(e);
         }
     }
 
-    private UserDo buildUserSave(UserForm userForm,String userId, String dirPath) throws ServiceException {
+    private UserDo buildUserSave(UserForm userForm, String userId, String dirPath) throws ServiceException {
         try {
 
             //头像图片路径
@@ -175,7 +177,7 @@ public class UserService extends BaseService {
             }
             return userDo;
         } catch (Exception e) {
-            logger.error("用户注册失败",e);
+            logger.error("用户注册失败", e);
             throw new ServiceException(e);
         }
     }
@@ -224,7 +226,8 @@ public class UserService extends BaseService {
     private UserRoleDo buildUserRoleSave(UserDo userDo) throws ServiceException {
         try {
             UserRoleDo userRoleDo = new UserRoleDo();
-            userRoleDo.setRoleId(2);
+            RoleDo roleDo = roleDao.getRoleByName("user");
+            userRoleDo.setRoleId(roleDo != null ? roleDo.getRoleId() : "-1");
             userRoleDo.setUserId(userDo.getUserId());
             return userRoleDo;
         } catch (Exception e) {

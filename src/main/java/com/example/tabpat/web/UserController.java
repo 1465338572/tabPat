@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 
+/**
+ * 用户web
+ * @author ABin
+ * @date 2025/03/11
+ */
 @RestController
 public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);

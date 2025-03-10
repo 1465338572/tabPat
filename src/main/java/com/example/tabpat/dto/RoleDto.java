@@ -1,7 +1,5 @@
-package com.example.tabpat.domain;
+package com.example.tabpat.dto;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.ToString;
 
@@ -9,17 +7,18 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
+ * 角色返回类
+ *
  * @author ABin
  * @date 2025/03/11
  */
 @Data
 @ToString
-@TableName("roles")
-public class RoleDo implements Serializable {
+public class RoleDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
     //角色id
-    @TableId
     private String roleId;
     //角色名
     private String roleName;

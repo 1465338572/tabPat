@@ -161,7 +161,7 @@ public class ArticlesService extends BaseService {
     @Transactional
     public Result listWidthLabel(ArticlesQuery articlesQuery, String labelId) throws ServiceException {
         try {
-            List<ArticlesLabelDo> ArticlesLabelDoLists = articlesLabelDao.selectArticlesLabel(labelId);
+            List<ArticlesLabelDo> articlesLabelDoLists = articlesLabelDao.selectArticlesLabel(labelId);
             UserDo userDo = userDao.getUserByName(getCurrentUsername());
             String userId = userDo.getUserId();
             QueryWrapper<ArticlesDo> wrapper = new QueryWrapper<>();
@@ -171,7 +171,7 @@ public class ArticlesService extends BaseService {
             }
             wrapper.orderByDesc("article_date");
             List<String> articlesLabelIds = new ArrayList<>();
-            for (ArticlesLabelDo articlesLabelDo : ArticlesLabelDoLists) {
+            for (ArticlesLabelDo articlesLabelDo : articlesLabelDoLists) {
                 articlesLabelIds.add(articlesLabelDo.getArticlesId());
             }
             //防止无数据报错的临时解决办法 --事实上根本毫无头绪，可能本身逻辑就有问题，但修改颇为麻烦

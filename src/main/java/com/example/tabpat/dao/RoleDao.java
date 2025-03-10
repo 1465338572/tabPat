@@ -7,7 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author ABin
+ * @date 2025/03/11
+ */
 @Repository
 public interface RoleDao extends BaseMapper<RoleDo> {
-    List<RoleDo> getRoleById(@Param("roleId") Integer roleId);
+    List<RoleDo> getRoleById(@Param("roleId") String roleId);
+
+    RoleDo getRoleByName(@Param("roleName") String roleName);
 }

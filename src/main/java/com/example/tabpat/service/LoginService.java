@@ -91,7 +91,8 @@ public class LoginService extends BaseService implements UserDetailsService {
         // 新建权限集合，SimpleGrantedAuthority是GrantedAuthority实现类
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(1);
         //用于添加用户的权限。将用户权限添加到authorities
-        List<RoleDo> roles = roleDao.getRoleById(userRoleDo.getRoleId()); // 查询该用户的角色
+        // 查询该用户的角色
+        List<RoleDo> roles = roleDao.getRoleById(userRoleDo.getRoleId());
         for (RoleDo role : roles) {
             // 将role的name放入权限的集合
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
