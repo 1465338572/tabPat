@@ -1,9 +1,7 @@
 package com.example.tabpat.web;
 
-import com.example.tabpat.annotation.ArticlesView;
 import com.example.tabpat.annotation.UnderlineToCamel;
 import com.example.tabpat.code.HttpStatusCode;
-import com.example.tabpat.form.ArticlesForm;
 import com.example.tabpat.form.RoleForm;
 import com.example.tabpat.query.RoleQuery;
 import com.example.tabpat.service.Result;
@@ -69,7 +67,6 @@ public class RoleController {
      */
     @GetMapping(value = "/secure/getRole/{role_id}")
     @ResponseBody
-    @ArticlesView
     public Result get(@PathVariable("role_id") String roleId, HttpServletResponse response) {
         Result result;
         try {

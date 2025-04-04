@@ -48,9 +48,7 @@ public class AppService extends BaseService {
         AppDto appDto = new AppDto();
         appDto.setId(appDo.getId());
         appDto.setName(appDo.getName());
-        String[] typeArray = appDo.getType().split(",");
-        List<String> typeList = new ArrayList<>(Arrays.asList(typeArray));
-        appDto.setType(typeList);
+        appDto.setType(appDo.getType());
         appDto.setCode(appDo.getCode());
         appDto.setIcon(appDo.getIcon());
         appDto.setPid(appDo.getPid());

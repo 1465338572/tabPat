@@ -4,8 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.tabpat.dao.AppDao">
 
-    <select id="selectList" resultType="com.example.tabpat.domain.AppDo">
+    <select id="selectList" resultType="AppDo">
         SELECT *
         FROM apps
+    </select>
+
+    <select id="selectByAppId" resultType="AppDo">
+        SELECT id,
+               name,
+               type,
+               code,
+               icon,
+               pid,
+               path,
+               pos
+        FROM apps
+        WHERE id = #{appId};
     </select>
 </mapper>

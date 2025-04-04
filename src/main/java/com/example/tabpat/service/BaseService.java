@@ -31,6 +31,8 @@ public class BaseService {
 
     protected CommentDao commentDao;
 
+    protected RolePermissionDao rolePermissionDao;
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -62,21 +64,35 @@ public class BaseService {
     }
 
     @Autowired
-    public void setUserLabelDao(UserLabelDao userLabelDao){
+    public void setUserLabelDao(UserLabelDao userLabelDao) {
         this.userLabelDao = userLabelDao;
     }
 
     @Autowired
-    public void setArticlesLabelDao(ArticlesLabelDao articlesLabelDao){ this.articlesLabelDao = articlesLabelDao; }
+    public void setArticlesLabelDao(ArticlesLabelDao articlesLabelDao) {
+        this.articlesLabelDao = articlesLabelDao;
+    }
 
     @Autowired
-    public void setArticlesCountDao(ArticlesCountDao articlesCountDao){ this.articlesCountDao = articlesCountDao; }
+    public void setArticlesCountDao(ArticlesCountDao articlesCountDao) {
+        this.articlesCountDao = articlesCountDao;
+    }
 
     @Autowired
-    public void setFileUploadDao(FileUploadDao fileUploadDao){ this.fileUploadDao = fileUploadDao; }
+    public void setFileUploadDao(FileUploadDao fileUploadDao) {
+        this.fileUploadDao = fileUploadDao;
+    }
 
     @Autowired
-    public void setCommentDao(CommentDao commentDao){ this.commentDao = commentDao; }
+    public void setCommentDao(CommentDao commentDao) {
+        this.commentDao = commentDao;
+    }
+
+    @Autowired
+
+    public void setRolePermissionDao(RolePermissionDao rolePermissionDao) {
+        this.rolePermissionDao = rolePermissionDao;
+    }
 
     //邮箱检测方法
     public static final String REGEX_EMAIL = "^[A-Za-z0-9\\u4e00-\\u9fa5]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$";

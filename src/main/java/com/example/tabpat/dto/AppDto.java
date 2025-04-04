@@ -17,7 +17,7 @@ public class AppDto implements Serializable {
 
     private Long id;
     private String name;
-    private List<String> type;
+    private String type;
     private String code;
     private String icon;
     private Long pid;
