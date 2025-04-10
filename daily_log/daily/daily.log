@@ -1,101 +1,279 @@
-2025-04-04 17:02:19.052 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 14500 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
-2025-04-04 17:02:19.067 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
-2025-04-04 17:02:19.668 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2025-04-04 17:02:19.672 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-04-04 17:02:19.701 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
-2025-04-04 17:02:20.368 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
-2025-04-04 17:02:20.380 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:02:20.381 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
-2025-04-04 17:02:20.381 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
-2025-04-04 17:02:20.427 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
-2025-04-04 17:02:20.428 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1329 ms
-2025-04-04 17:02:20.952 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:20.967 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:20.980 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:20.988 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:20.995 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.004 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.024 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.039 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.048 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.057 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:02:21.398 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
-2025-04-04 17:02:21.853 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:02:21.871 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
-2025-04-04 17:02:21.881 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.329 seconds (process running for 4.959)
-2025-04-04 17:02:37.739 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-04-04 17:02:37.742 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
-2025-04-04 17:02:37.743 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
-2025-04-04 17:02:38.006 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
-2025-04-04 17:02:38.685 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26fb8ec2
-2025-04-04 17:02:38.688 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
-2025-04-04 17:38:45.492 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
-2025-04-04 17:38:45.657 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
-2025-04-04 17:38:45.777 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
-2025-04-04 17:38:45.792 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
-2025-04-04 17:38:50.619 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 22900 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
-2025-04-04 17:38:50.628 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
-2025-04-04 17:38:51.263 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2025-04-04 17:38:51.266 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-04-04 17:38:51.298 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
-2025-04-04 17:38:51.961 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
-2025-04-04 17:38:51.973 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:38:51.974 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
-2025-04-04 17:38:51.974 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
-2025-04-04 17:38:52.023 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
-2025-04-04 17:38:52.024 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1355 ms
-2025-04-04 17:38:52.621 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.637 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.653 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.666 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.680 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.691 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.717 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.730 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.743 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:52.751 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:38:53.130 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
-2025-04-04 17:38:53.810 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:38:53.845 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
-2025-04-04 17:38:53.863 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.78 seconds (process running for 4.764)
-2025-04-04 17:39:00.949 - INFO  [nio-8080-exec-2] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-04-04 17:39:00.949 - INFO  [nio-8080-exec-2] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
-2025-04-04 17:39:00.952 - INFO  [nio-8080-exec-2] o.s.w.s.FrameworkServlet       : Completed initialization in 3 ms
-2025-04-04 17:39:01.717 - INFO  [nio-8080-exec-1] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
-2025-04-04 17:39:02.264 - INFO  [nio-8080-exec-1] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2427fddd
-2025-04-04 17:39:02.266 - INFO  [nio-8080-exec-1] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
-2025-04-04 17:40:04.191 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
-2025-04-04 17:40:04.337 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
-2025-04-04 17:40:04.364 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
-2025-04-04 17:40:04.378 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
-2025-04-04 17:40:07.227 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 8284 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
-2025-04-04 17:40:07.234 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
-2025-04-04 17:40:07.848 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2025-04-04 17:40:07.851 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-04-04 17:40:07.882 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
-2025-04-04 17:40:08.518 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
-2025-04-04 17:40:08.531 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:40:08.532 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
-2025-04-04 17:40:08.532 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
-2025-04-04 17:40:08.601 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
-2025-04-04 17:40:08.602 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1326 ms
-2025-04-04 17:40:09.412 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.443 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.471 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.485 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.499 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.516 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.546 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.559 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.574 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:09.585 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2025-04-04 17:40:10.055 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
-2025-04-04 17:40:10.566 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
-2025-04-04 17:40:10.582 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
-2025-04-04 17:40:10.596 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.86 seconds (process running for 4.735)
-2025-04-04 17:40:10.809 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-04-04 17:40:10.809 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
-2025-04-04 17:40:10.810 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
-2025-04-04 17:40:11.301 - INFO  [nio-8080-exec-4] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
-2025-04-04 17:40:11.586 - INFO  [nio-8080-exec-4] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@41444872
-2025-04-04 17:40:11.588 - INFO  [nio-8080-exec-4] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 14:17:45.591 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 8144 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 14:17:45.605 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 14:17:46.181 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 14:17:46.184 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 14:17:46.213 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2025-04-10 14:17:46.885 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 14:17:46.898 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 14:17:46.899 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 14:17:46.899 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 14:17:46.952 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 14:17:46.953 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1308 ms
+2025-04-10 14:17:47.496 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.510 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.524 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.533 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.545 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.557 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.583 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.597 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.606 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:47.616 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:17:48.091 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 14:17:48.634 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 14:17:48.649 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 14:17:48.662 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.566 seconds (process running for 5.238)
+2025-04-10 14:17:55.364 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 14:17:55.364 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 14:17:55.366 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 2 ms
+2025-04-10 14:17:55.568 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 14:17:56.322 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@765836d1
+2025-04-10 14:17:56.326 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 14:26:47.304 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 14:26:47.522 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 14:26:47.534 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 14:26:47.542 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 14:26:51.236 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 21888 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 14:26:51.244 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 14:26:51.802 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 14:26:51.803 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 14:26:51.829 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 0 Redis repository interfaces.
+2025-04-10 14:26:52.428 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 14:26:52.456 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 14:26:52.457 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 14:26:52.459 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 14:26:52.519 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 14:26:52.519 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1236 ms
+2025-04-10 14:26:53.057 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.072 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.089 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.100 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.110 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.121 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.145 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.155 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.164 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.174 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 14:26:53.640 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 14:26:54.100 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 14:26:54.115 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 14:26:54.127 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.308 seconds (process running for 4.081)
+2025-04-10 14:27:00.274 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 14:27:00.275 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 14:27:00.276 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 14:27:00.905 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 14:27:01.243 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9647ddb
+2025-04-10 14:27:01.245 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 15:45:52.209 - WARN  [nio-8080-exec-1] o.s.w.s.DispatcherServlet      : No mapping for GET /secure/getUserRole/bffe5a2b6db94408accdeb74d68ac432
+2025-04-10 15:45:52.283 - WARN  [nio-8080-exec-1] efaultHandlerExceptionResolver : No endpoint GET /secure/getUserRole/bffe5a2b6db94408accdeb74d68ac432.
+2025-04-10 15:49:05.856 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 15:49:06.085 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 15:49:06.177 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 15:49:06.190 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 15:49:10.686 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 20620 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 15:49:10.698 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 15:49:11.493 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 15:49:11.497 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 15:49:11.551 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2025-04-10 15:49:12.609 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 15:49:12.622 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 15:49:12.624 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 15:49:12.624 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 15:49:12.676 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 15:49:12.676 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1929 ms
+2025-04-10 15:49:13.305 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.322 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.338 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.349 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.362 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.376 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.403 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.414 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.429 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.439 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 15:49:13.898 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 15:49:14.452 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 15:49:14.472 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 15:49:14.485 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 4.356 seconds (process running for 5.292)
+2025-04-10 15:49:24.289 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 15:49:24.289 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 15:49:24.290 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 15:49:24.991 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 15:49:25.427 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@25f7ee7a
+2025-04-10 15:49:25.430 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 18:00:01.534 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 18:00:01.774 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 18:00:01.814 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 18:00:01.822 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 18:00:06.481 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 27008 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 18:00:06.491 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 18:00:07.200 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 18:00:07.202 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 18:00:07.236 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2025-04-10 18:00:07.961 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 18:00:07.976 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:00:07.977 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 18:00:07.977 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 18:00:08.033 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 18:00:08.033 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1503 ms
+2025-04-10 18:00:08.659 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.675 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.691 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.701 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.712 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.723 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.744 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.756 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.766 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:08.774 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:00:09.255 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 18:00:09.783 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:00:09.801 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 18:00:09.814 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.984 seconds (process running for 4.961)
+2025-04-10 18:03:02.031 - INFO  [nio-8080-exec-2] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 18:03:02.031 - INFO  [nio-8080-exec-2] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 18:03:02.034 - INFO  [nio-8080-exec-2] o.s.w.s.FrameworkServlet       : Completed initialization in 3 ms
+2025-04-10 18:03:02.842 - INFO  [nio-8080-exec-5] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 18:03:03.451 - INFO  [nio-8080-exec-5] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7acc232d
+2025-04-10 18:03:03.455 - INFO  [nio-8080-exec-5] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 18:03:24.082 - WARN  [io-8080-exec-10] stractHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unrecognized field "userId" (class com.example.tabpat.form.ArticlesForm), not marked as ignorable]
+2025-04-10 18:15:44.590 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 18:15:44.826 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 18:15:44.854 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 18:15:44.864 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 18:15:49.824 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 9832 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 18:15:49.831 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 18:15:50.480 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 18:15:50.483 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 18:15:50.516 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2025-04-10 18:15:51.213 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 18:15:51.226 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:15:51.228 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 18:15:51.228 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 18:15:51.281 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 18:15:51.282 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1407 ms
+2025-04-10 18:15:51.904 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:51.921 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:51.938 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:51.950 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:51.961 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:51.972 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:52.002 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:52.018 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:52.030 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:52.040 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:15:52.493 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 18:15:53.041 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:15:53.059 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 18:15:53.075 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.73 seconds (process running for 4.602)
+2025-04-10 18:16:04.404 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 18:16:04.405 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 18:16:04.406 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 18:16:04.978 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 18:16:05.290 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@63b84a5d
+2025-04-10 18:16:05.292 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 18:21:12.799 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 18:21:13.015 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 18:21:13.030 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 18:21:13.038 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 18:21:18.186 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 24428 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 18:21:18.196 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 18:21:19.056 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 18:21:19.059 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 18:21:19.091 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+2025-04-10 18:21:19.813 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 18:21:19.827 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:21:19.828 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 18:21:19.828 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 18:21:19.885 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 18:21:19.886 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1619 ms
+2025-04-10 18:21:20.505 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.522 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.537 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.550 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.561 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.571 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.594 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.604 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.614 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:20.623 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:21:21.095 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 18:21:21.661 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:21:21.682 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 18:21:21.696 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 4.105 seconds (process running for 5.068)
+2025-04-10 18:21:25.460 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 18:21:25.460 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 18:21:25.461 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 18:21:25.610 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 18:21:25.996 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@30e6ec15
+2025-04-10 18:21:25.998 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 18:22:09.429 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 18:22:09.769 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 18:22:09.779 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 18:22:09.785 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 18:22:13.790 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 32744 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 18:22:13.798 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 18:22:14.425 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 18:22:14.428 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 18:22:14.458 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2025-04-10 18:22:15.170 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 18:22:15.187 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:22:15.189 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 18:22:15.189 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 18:22:15.250 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 18:22:15.250 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1402 ms
+2025-04-10 18:22:15.830 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.845 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.861 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.872 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.881 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.892 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.914 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.927 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.938 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:15.948 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:22:16.414 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 18:22:16.966 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:22:16.987 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 18:22:17.001 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 3.721 seconds (process running for 4.536)
+2025-04-10 18:22:20.076 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 18:22:20.076 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 18:22:20.077 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 18:22:20.207 - INFO  [nio-8080-exec-4] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 18:22:20.469 - INFO  [nio-8080-exec-4] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1a2a6535
+2025-04-10 18:22:20.471 - INFO  [nio-8080-exec-4] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.
+2025-04-10 18:28:51.234 - INFO  [ionShutdownHook] o.s.b.w.e.t.GracefulShutdown   : Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-10 18:28:51.434 - INFO  [tomcat-shutdown] o.s.b.w.e.t.GracefulShutdown   : Graceful shutdown complete
+2025-04-10 18:28:51.442 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown initiated...
+2025-04-10 18:28:51.449 - INFO  [ionShutdownHook] c.z.h.HikariDataSource         : HikariPool-1 - Shutdown completed.
+2025-04-10 18:28:54.765 - INFO  [           main] o.s.b.StartupInfoLogger        : Starting TabPatApplication using Java 17.0.13 with PID 13940 (C:\Users\ABin\IdeaProjects\tabPat\target\classes started by ABin in C:\Users\ABin\IdeaProjects\tabPat)
+2025-04-10 18:28:54.773 - INFO  [           main] o.s.b.SpringApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-04-10 18:28:55.215 - INFO  [           main] epositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-04-10 18:28:55.217 - INFO  [           main] epositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-04-10 18:28:55.239 - INFO  [           main] epositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2025-04-10 18:28:55.719 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat initialized with port 8080 (http)
+2025-04-10 18:28:55.728 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:28:55.729 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting service [Tomcat]
+2025-04-10 18:28:55.729 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-04-10 18:28:55.768 - INFO  [           main] o.a.j.l.DirectJDKLog           : Initializing Spring embedded WebApplicationContext
+2025-04-10 18:28:55.768 - INFO  [           main] letWebServerApplicationContext : Root WebApplicationContext: initialization completed in 967 ms
+2025-04-10 18:28:56.181 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesCountDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.193 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.203 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.ArticlesLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.212 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.CommentDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.220 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.FileUploadDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.227 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.LabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.243 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.RolePermissionDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.250 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.259 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserLabelDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.266 - WARN  [           main] c.b.m.c.i.DefaultSqlInjector   : class com.example.tabpat.domain.UserRoleDo ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2025-04-10 18:28:56.593 - INFO  [           main] zeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name loginService
+2025-04-10 18:28:56.980 - INFO  [           main] o.a.j.l.DirectJDKLog           : Starting ProtocolHandler ["http-nio-8080"]
+2025-04-10 18:28:56.991 - INFO  [           main] o.s.b.w.e.t.TomcatWebServer    : Tomcat started on port 8080 (http) with context path '/'
+2025-04-10 18:28:57.001 - INFO  [           main] o.s.b.StartupInfoLogger        : Started TabPatApplication in 2.599 seconds (process running for 3.234)
+2025-04-10 18:29:04.106 - INFO  [nio-8080-exec-1] o.a.j.l.DirectJDKLog           : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-10 18:29:04.106 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Initializing Servlet 'dispatcherServlet'
+2025-04-10 18:29:04.108 - INFO  [nio-8080-exec-1] o.s.w.s.FrameworkServlet       : Completed initialization in 1 ms
+2025-04-10 18:29:04.216 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Starting...
+2025-04-10 18:29:04.472 - INFO  [nio-8080-exec-2] c.z.h.p.HikariPool             : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c36bfb2
+2025-04-10 18:29:04.474 - INFO  [nio-8080-exec-2] c.z.h.HikariDataSource         : HikariPool-1 - Start completed.

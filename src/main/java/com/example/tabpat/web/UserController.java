@@ -1,5 +1,6 @@
 package com.example.tabpat.web;
 
+import com.example.tabpat.annotation.UnderlineToCamel;
 import com.example.tabpat.code.HttpStatusCode;
 import com.example.tabpat.form.LoginForm;
 import com.example.tabpat.form.UserForm;
@@ -46,6 +47,23 @@ public class UserController {
             response.setStatus(HttpStatusCode.SERVICEERROR);
             return Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
         }
+    }
+
+    @GetMapping(value = "/secure/userList")
+    @ResponseBody
+    public Result list(@UnderlineToCamel UserQuery userQuery,HttpServletResponse response) {
+        Result result;
+        try {
+            result = userService.list(userQuery);
+            if (result.getCode() != 200){
+                response.setStatus(HttpStatusCode.SERVICEERROR);
+                return result;
+            }
+        } catch (ServiceException e) {
+            response.setStatus(HttpStatusCode.SERVICEERROR);
+            result = Result.failure(HttpStatusCode.SERVICEERROR, e.getMessage());
+        }
+        return result;
     }
 
     @PostMapping(value = "/public/getUser")

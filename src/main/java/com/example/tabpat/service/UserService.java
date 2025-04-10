@@ -1,5 +1,6 @@
 package com.example.tabpat.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.tabpat.check.UserCheck;
 import com.example.tabpat.domain.RoleDo;
 import com.example.tabpat.domain.UserDo;
@@ -10,6 +11,8 @@ import com.example.tabpat.query.UserQuery;
 import com.example.tabpat.util.BeanCopierUtil;
 import com.example.tabpat.util.PrimaryKeyUtil;
 import com.example.tabpat.util.Utils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.protobuf.ServiceException;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +28,8 @@ import java.nio.file.Path;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,6 +50,51 @@ public class UserService extends BaseService {
     @Autowired
     public void setUserCheck(UserCheck userCheck) {
         this.userCheck = userCheck;
+    }
+
+    @Transactional
+    public Result list(UserQuery userQuery) throws ServiceException {
+        try {
+            QueryWrapper<UserDo> wrapper = new QueryWrapper<>();
+            if (StringUtils.hasLength(userQuery.getUsername())) {
+                wrapper.like("username", userQuery.getUsername());
+            }
+            wrapper.orderByDesc("create_time");
+            PageHelper.startPage(userQuery.getPageNum(), userQuery.getPageSize());
+            List<UserDo> userDoList = userDao.selectList(wrapper);
+            PageInfo<UserDo> userDoPageInfo = new PageInfo<>(userDoList);
+            List<UserDto> userDtoList = new ArrayList<>();
+            if (userDoList.isEmpty()){
+                return Result.success(200,"查询成功", userDtoList);
+            }
+            for (UserDo userDo : userDoList) {
+                UserDto userDto = listShowDto(userDo);
+                userDtoList.add(userDto);
+            }
+            PageInfo<UserDto> userDtoPageInfo = new PageInfo<>(userDtoList);
+            userDtoPageInfo.setTotal(userDoPageInfo.getTotal());
+            return Result.success(200,"获取成功",userDtoPageInfo);
+        }catch (Exception e){
+            logger.error("用户查询失败", e);
+            throw new ServiceException(e);
+        }
+
+    }
+
+    private UserDto listShowDto(UserDo userDo) throws IOException {
+        UserDto userDto = new UserDto();
+        userDto.setUserId(userDo.getUserId());
+        userDto.setUsername(userDo.getUsername());
+        userDto.setQq(userDo.getQq());
+        userDto.setWeChat(userDo.getWeChat());
+        userDto.setEmail(userDo.getEmail());
+        userDto.setName(userDto.getName());
+        userDto.setCreateTime(userDo.getCreateTime());
+        userDto.setUpdateTime(userDo.getUpdateTime());
+        userDto.setBirthDay(userDo.getBirthDay());
+        String photo = FileUtils.fileRead(userDo.getPhoto());
+        userDto.setPhone(photo);
+        return userDto;
     }
 
     @Transactional

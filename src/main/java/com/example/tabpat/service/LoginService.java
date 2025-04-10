@@ -85,18 +85,30 @@ public class LoginService extends BaseService implements UserDetailsService {
         return map;
     }
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDo user = userDao.getUserByName(username);
-        UserRoleDo userRoleDo = userRoleDao.selectById(user.getUserId());
-        // 新建权限集合，SimpleGrantedAuthority是GrantedAuthority实现类
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>(1);
-        //用于添加用户的权限。将用户权限添加到authorities
-        // 查询该用户的角色
-        List<RoleDo> roles = roleDao.getRoleById(userRoleDo.getRoleId());
-        for (RoleDo role : roles) {
-            // 将role的name放入权限的集合
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在");
         }
+        List<UserRoleDo> userRoleDoList = userRoleDao.selectByUserId(user.getUserId());
+
+        // 这里使用 Set 避免角色重复
+        Set<String> roleNames = new HashSet<>();
+        for (UserRoleDo userRoleDo : userRoleDoList) {
+            List<RoleDo> roles = roleDao.getRoleById(userRoleDo.getRoleId());
+            for (RoleDo role : roles) {
+                // 只关心角色名，避免重复
+                roleNames.add(role.getRoleName());
+            }
+        }
+        // 转换角色名为 GrantedAuthority 对象
+        List<SimpleGrantedAuthority> authorities = roleNames.stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
+
+        // 返回包含角色权限的 UserDetails
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 

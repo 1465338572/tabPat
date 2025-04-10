@@ -7,6 +7,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author ABin
+ * @date 2025/04/10
+ */
 @Data
 @ToString
 public class ArticlesForm implements Serializable {

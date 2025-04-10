@@ -7,12 +7,16 @@ import org.apache.ibatis.annotations.Lang;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * @author ABin
+ * @date 2025/04/09
+ */
 @Data
 @ToString
 public class UserDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-
+    private String userId;
     private String username;
     private String qq;
     private String weChat;

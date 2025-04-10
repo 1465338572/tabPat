@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.tabpat.dao.UserDao">
+    <select id="selectList" resultType="UserDo">
+        SELECT user_id,
+               username,
+               password,
+               qq,
+               we_chat,
+               email,
+               name,
+               create_time,
+               update_time,
+               birth_day,
+               phone,
+               photo
+        FROM users ${ew.customSqlSegment}
+    </select>
     <select id="getUserByName" resultType="UserDo">
         SELECT *
         FROM users

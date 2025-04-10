@@ -35,6 +35,7 @@ public class RoleService extends BaseService {
     public Result list(RoleQuery roleQuery) throws ServiceException {
         try {
             QueryWrapper<RoleDo> wrapper = new QueryWrapper<>();
+
             if (roleQuery.getRoleId() != null) {
                 wrapper.eq("role_id", roleQuery.getRoleId());
             }
@@ -42,26 +43,37 @@ public class RoleService extends BaseService {
                 wrapper.like("role_name", roleQuery.getRoleName());
             }
             wrapper.orderByDesc("create_time");
-            PageHelper.startPage(roleQuery.getPageNum(), roleQuery.getPageSize());
-            List<RoleDo> roleDoList = roleDao.selectList(wrapper);
-            PageInfo<RoleDo> roleDoPageInfo = new PageInfo<>(roleDoList);
-            List<RoleDto> roleDtoList = new ArrayList<>();
-            if (roleDoList.isEmpty()) {
-                return Result.success(200, "获取角色成功", roleDtoList);
+
+            // 判断是否分页
+            boolean doPage = roleQuery.getPageNum() != null && roleQuery.getPageSize() != null;
+            List<RoleDo> roleDoList;
+
+            if (doPage) {
+                PageHelper.startPage(roleQuery.getPageNum(), roleQuery.getPageSize());
             }
+
+            roleDoList = roleDao.selectList(wrapper);
+
+            List<RoleDto> roleDtoList = new ArrayList<>();
             for (RoleDo roleDo : roleDoList) {
                 RoleDto roleDto = listShowDto(roleDo);
                 roleDtoList.add(roleDto);
             }
 
-            PageInfo<RoleDto> roleDtoPageInfo = new PageInfo<>(roleDtoList);
-            roleDtoPageInfo.setTotal(roleDoPageInfo.getTotal());
-            return Result.success(200, "获取成功", roleDtoPageInfo);
+            if (doPage) {
+                PageInfo<RoleDo> roleDoPageInfo = new PageInfo<>(roleDoList);
+                PageInfo<RoleDto> roleDtoPageInfo = new PageInfo<>(roleDtoList);
+                roleDtoPageInfo.setTotal(roleDoPageInfo.getTotal());
+                return Result.success(200, "获取成功（分页）", roleDtoPageInfo);
+            } else {
+                return Result.success(200, "获取成功（全量）", roleDtoList);
+            }
         } catch (Exception e) {
             logger.error("查询角色列表失败", e);
             throw new ServiceException(e);
         }
     }
+
 
     private RoleDto listShowDto(RoleDo roleDo) {
         RoleDto roleDto = new RoleDto();

@@ -31,5 +31,4 @@ public class UserDo implements Serializable {
     private Long updateTime;
     private String phone;
     private String photo;
-
 }

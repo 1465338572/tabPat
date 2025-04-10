@@ -4,16 +4,37 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.tabpat.dao.UserRoleDao">
 
-    <select id="selectById" resultType="com.example.tabpat.domain.UserRoleDo">
-        SELECT *
+    <select id="selectByUserId" resultType="UserRoleDo">
+        SELECT
+            user_id,
+            role_id
         FROM user_role
         WHERE user_id = #{userId};
     </select>
 
-    <insert id="insert" parameterType="com.example.tabpat.domain.UserRoleDo" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insert" parameterType="UserRoleDo" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO user_role(user_id,
                               role_id)
         VALUES (#{userId},
                 #{roleId})
     </insert>
+
+    <insert id="insertBatch" parameterType="UserRoleDo">
+        INSERT INTO user_role (
+                               user_id,
+                               role_id)
+        VALUES
+        <foreach collection="userRoleDoList" item="item" separator=",">
+            (#{item.userId}, #{item.roleId})
+        </foreach>
+    </insert>
+
+    <delete id="remove" parameterType="UserRoleDo">
+        DELETE
+        FROM user_role
+        WHERE
+        user_id = #{userId}
+    </delete>
+
+
 </mapper>
