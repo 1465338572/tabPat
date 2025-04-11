@@ -55,7 +55,7 @@
                 article_like_count = #{et.articleLikeCount},
             </if>
             <if test="et.articleShow!=null">
-                article_show = #{et.articleShow}
+                article_show = #{et.articleShow},
             </if>
             <if test="et.articleImg!=null">
                 article_img = #{et.articleImg}
