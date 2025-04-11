@@ -23,8 +23,8 @@
         WHERE role_id = #{roleId};
     </select>
 
-    <select id="getRoleByRoleName" resultType="RoleDo">
-        SELECT role_id,
+    <select id="getRoleByName" resultType="RoleDo">
+        SELECT role_id
         FROM roles
         WHERE role_name = #{roleName};
     </select>

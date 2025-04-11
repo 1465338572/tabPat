@@ -16,6 +16,8 @@ import java.util.List;
 public interface RolePermissionDao extends BaseMapper<RolePermissionDo> {
     List<RolePermissionDo> getRolePermissionByRoleId(@Param("roleId") String roleId);
 
+    List<RolePermissionDo> getRolePermissionByRoleIds(@Param("roleIds") List<String> roleIds);
+
     List<RolePermissionDo> getRolePermissionByPermissionId(@Param("permissionId") String permissionId);
 
     void deleteRolePermission(RolePermissionDo rolePermissionDo);
