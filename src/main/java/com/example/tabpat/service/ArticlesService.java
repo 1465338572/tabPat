@@ -84,7 +84,7 @@ public class ArticlesService extends BaseService {
         }
     }
 
-    private ArticlesDto pubListShowDto(ArticlesDo articlesDo) throws IOException {
+    private ArticlesDto pubListShowDto(ArticlesDo articlesDo){
         ArticlesDto articlesDto = new ArticlesDto();
         String articleId = articlesDo.getArticleId();
         ArticlesLabelDo articlesLabelDo = articlesLabelDao.getArticlesLabel(articleId, null);
@@ -92,14 +92,13 @@ public class ArticlesService extends BaseService {
             LabelDo labelDo = labelDao.getLabelByLabelId(articlesLabelDo.getLabelId());
             articlesDto.setLabelName(labelDo.getLabelName());
         }
-        String img = FileUtils.fileRead(articlesDo.getArticleImg());
         articlesDto.setArticleId(articleId);
         articlesDto.setArticleTitle(articlesDo.getArticleTitle());
         articlesDto.setArticleView(articlesDo.getArticleView());
         articlesDto.setArticleDate(articlesDo.getArticleDate());
         articlesDto.setArticleLikeCount(articlesDo.getArticleLikeCount());
         articlesDto.setArticleShow(articlesDo.getArticleShow());
-        articlesDto.setArticleImg(img);
+        articlesDto.setArticleImg(articlesDo.getArticleImg());
         return articlesDto;
     }
 
